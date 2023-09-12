@@ -14,7 +14,7 @@ export const formSteps = ({
     render(<Form />)
   })
 
-  When(/^The users enters "(.*)" as "(.*)"$/, (value, field) => {
+  When(/^The user enters "(.*)" as "(.*)"$/, (value, field) => {
     const nameField = screen.getByTestId(field)
     fireEvent.change(nameField, {
       target: { value }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useState } from 'react'
-import { isUppercase } from '../utils/validators.js'
+import { isUppercase, isValidUsername } from '../utils/validators.js'
 
 import TextField from './TextField.jsx'
 import SelectField from './SelectField.jsx'
@@ -39,7 +39,7 @@ function Form () {
         label='Username'
         value={username}
         onChange={setUsername}
-        validator={isUppercase}
+        validator={value => isValidUsername(name, value)}
         testid={'username'}
       />
 
@@ -56,7 +56,6 @@ function Form () {
         value={DNI}
         onChange={setDNI}
         validator={isUppercase}
-        ç
         testid={'dni'}
       />
     </div>

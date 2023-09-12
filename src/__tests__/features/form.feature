@@ -16,19 +16,25 @@ Feature: Form Submission
 
     Scenario: Name field valid
         Given The user opens the form
-        When The users enters "JOHN" as "name"
+        When The user enters "JOHN" as "name"
         Then The field "name" should be marked as "valid"
 
     Scenario: Surname field valid
         Given The user opens the form
-        When The users enters "DOE" as "surname"
+        When The user enters "DOE" as "surname"
         Then The field "surname" should be marked as "valid"
+
+    Scenario: Username field valid
+        Given The user opens the form
+        And The user enters "JOHN" as "name"
+        When The user enters "MIDUDEV" as "username"
+        Then The field "username" should be marked as "valid"
+
 
 # Scenario Outline: Field is valid when uppercase value entered
 #     Given The user opens the form
 #     When The user enters "<value>" as "<field>"
 #     Then The field "<field>" should be marked as "valid"
-
 #     Examples:
 #         | field   | value |
 #         | name    | JOHN  |
@@ -54,11 +60,6 @@ Feature: Form Submission
 #         | doe     | Surname must contain only uppercase letters |
 #         | DoE     | Surname must contain only uppercase letters |
 
-# Scenario: Username field valid
-#     Given The user opens the form
-#     And The user enters "JOHN" as name
-#     When The users enters "MIDUDEV" as username
-#     Then The field should be marked as valid
 
 # Scenario Outline: Username field invalid message
 #     Given The user opens the form
