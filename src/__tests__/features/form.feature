@@ -19,6 +19,11 @@ Feature: Form Submission
         When The user enters "JOHN" as "name"
         Then The field "name" should be marked as "valid"
 
+    # Scenario: Name field invalid
+    #     Given The user opens the form
+    #     When The user enters "john" as "name"
+    #     Then The field "name" should be marked as "invalid"
+
     Scenario: Surname field valid
         Given The user opens the form
         When The user enters "DOE" as "surname"
@@ -30,15 +35,46 @@ Feature: Form Submission
         When The user enters "MIDUDEV" as "username"
         Then The field "username" should be marked as "valid"
 
+    Scenario Outline: Valid Spain ID
+        Given The user opens the form
+        And The user selects "Spain" from the country dropdown
+        When The user enters "<id>" as "dni"
+        Then The field "dni" should be marked as "valid"
+        Examples:
+            | id        |
+            | 12345678Z |
+            | 87654321X |
+            | 12398764Q |
 
-# Scenario Outline: Field is valid when uppercase value entered
-#     Given The user opens the form
-#     When The user enters "<value>" as "<field>"
-#     Then The field "<field>" should be marked as "valid"
-#     Examples:
-#         | field   | value |
-#         | name    | JOHN  |
-#         | surname | DOE   |
+    Scenario Outline: Valid Argentina ID
+        Given The user opens the form
+        And The user selects "Argentina" from the country dropdown
+        When The user enters "<id>" as "dni"
+        Then The field "dni" should be marked as "valid"
+        Examples:
+            | id          |
+            | 99999999999 |
+            | 12345678901 |
+
+    Scenario Outline: Invalid Spain ID
+        Given The user opens the form
+        And The user selects "Spain" from the country dropdown
+        When The user enters "<invalidId>" as "dni"
+        Then The field "dni" should be marked as "invalid"
+        Examples:
+            | invalidId |
+            | 12        |
+            | XYZ1234   |
+
+    Scenario Outline: Invalid Argentina ID
+        Given The user opens the form
+        And The user selects "Argentina" from the country dropdown
+        When The user enters "<invalidId>" as "dni"
+        Then The field "dni" should be marked as "invalid"
+        Examples:
+            | invalidId |
+            | 1234      |
+            | ABC123    |
 
 
 # Scenario Outline: Name field invalid message
@@ -80,45 +116,9 @@ Feature: Form Submission
 #         | Spain     |
 #         | Argentina |
 
-# Scenario Outline: Valid Spain ID
-#     Given The user opens the form
-#     And The user selects "Spain" from the country dropdown
-#     When The user enters "<id>" in the ID field
-#     Then The field should be marked as valid
-#     Examples:
-#         | id        |
-#         | 12345678Z |
-#         | 87654321M |
 
-# Scenario Outline: Invalid Spain ID
-#     Given The user opens the form
-#     And The user selects "Spain" from the country dropdown
-#     When The user enters "<invalidId>" in the ID field
-#     Then The field should be marked as invalid
-#     Examples:
-#         | invalidId |
-#         | 12        |
-#         | XYZ1234   |
 
-# Scenario Outline: Valid Argentina ID
-#     Given The user opens the form
-#     And The user selects "Argentina" from the country dropdown
-#     When The user enters "<id>" in the ID field
-#     Then The field should be marked as valid
-#     Examples:
-#         | id          |
-#         | 99999999999 |
-#         | 12345678901 |
 
-# Scenario Outline: Invalid Argentina ID
-#     Given The user opens the form
-#     And The user selects "Argentina" from the country dropdown
-#     When The user enters "<invalidId>" in the ID field
-#     Then The field should be marked as invalid
-#     Examples:
-#         | invalidId |
-#         | 1234      |
-#         | ABC123    |
 
 # Scenario Outline: Invalid Argentina ID message
 #     Given The user opens the form

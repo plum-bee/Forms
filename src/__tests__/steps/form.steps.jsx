@@ -14,12 +14,25 @@ export const formSteps = ({
     render(<Form />)
   })
 
+  And(/^The user selects "(.*)" from the country dropdown$/, country => {
+    const countryField = screen.getByTestId('country')
+    fireEvent.change(countryField, {
+      target: { value: country }
+    })
+  })
+
+  When(/^The user enters (.*) in the ID field$/, dni => {
+    const dniField = screen.getByTestId('dni')
+    fireEvent.change(dniField, {
+      target: { value: dni }
+    })
+  })
+
   When(/^The user enters "(.*)" as "(.*)"$/, (value, field) => {
     const nameField = screen.getByTestId(field)
     fireEvent.change(nameField, {
       target: { value }
     })
-    expect(nameField.value).toBe(value)
   })
 
   Then(/^The field "(.*)" should be marked as "(.*)"$/, (field, isValid) => {

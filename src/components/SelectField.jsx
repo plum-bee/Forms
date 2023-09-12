@@ -13,9 +13,9 @@ export default function SelectField ({
   }
 
   return (
-    <label data-testid={testid}>
+    <label>
       {label}:
-      <select value={value} onChange={handleChange}>
+      <select value={value} onChange={handleChange} data-testid={testid}>
         {options.map(option => (
           <option key={option}>{option}</option>
         ))}
