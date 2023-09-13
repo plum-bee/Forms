@@ -95,6 +95,11 @@ Feature: Form Submission
             | country  | Select a country    |
             | dni      | Enter your ID       |
 
+    #TODO
+    Scenario: Submit button is disabled
+        Given The user opens the form
+        Then The user should see the "submit" button disabled
+
 
 # Scenario Outline: Name field invalid message
 #     Given The user opens the form
