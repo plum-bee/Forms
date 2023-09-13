@@ -84,21 +84,25 @@ Feature: Form Submission
             | 1234      |
             | ABC123    |
 
-    #TODO
-    Scenario: Fields placeholder
+    Scenario: Text fields placeholder
         Given The user opens the form
-        Then The user should see the following field placeholder:
+        Then The user should see the following text fields placeholder:
             | field    | placeholder         |
             | name     | Enter your name     |
             | surname  | Enter your surname  |
             | username | Enter your username |
-            | country  | Select a country    |
-            | dni      | Enter your ID       |
+            | dni      | Enter your DNI      |
 
-    #TODO
-    Scenario: Submit button is disabled
+    Scenario: Select fields placeholder
         Given The user opens the form
-        Then The user should see the "submit" button disabled
+        Then The user should see the following select fields placeholder:
+            | field   | placeholder         |
+            | country | Select your country |
+
+#TODO
+# Scenario: Submit button is disabled
+#     Given The user opens the form
+#     Then The user should see the "submit" button disabled
 
 
 # Scenario Outline: Name field invalid message

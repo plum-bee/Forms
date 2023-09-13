@@ -20,12 +20,13 @@ function Form () {
   const availableCountries = ['Spain', 'Argentina']
 
   return (
-    <div>
+    <form>
       <h1 data-testid='formtitle'>Minesweeper Form</h1>
 
       <TextField
         label='Name'
         value={name}
+        placeholder='Enter your name'
         onChange={setName}
         validator={isUppercase}
         testid='name'
@@ -34,6 +35,7 @@ function Form () {
       <TextField
         label='Surname'
         value={surname}
+        placeholder='Enter your surname'
         onChange={setSurname}
         validator={isUppercase}
         testid={'surname'}
@@ -42,6 +44,7 @@ function Form () {
       <TextField
         label='Username'
         value={username}
+        placeholder='Enter your username'
         onChange={setUsername}
         validator={value => isValidUsername(name, value)}
         testid={'username'}
@@ -50,6 +53,7 @@ function Form () {
       <SelectField
         label='Country'
         value={country}
+        placeholder='Select your country'
         onChange={setCountry}
         options={[...availableCountries]}
         testid={'country'}
@@ -58,11 +62,12 @@ function Form () {
       <TextField
         label='DNI'
         value={DNI}
+        placeholder='Enter your DNI'
         onChange={setDNI}
         validator={value => isValidDNI(country, value)}
         testid={'dni'}
       />
-    </div>
+    </form>
   )
 }
 

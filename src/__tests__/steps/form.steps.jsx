@@ -21,13 +21,6 @@ export const formSteps = ({
     })
   })
 
-  When(/^The user enters (.*) in the ID field$/, dni => {
-    const dniField = screen.getByTestId('dni')
-    fireEvent.change(dniField, {
-      target: { value: dni }
-    })
-  })
-
   When(/^The user clicks the "(.*)" dropdown$/, field => {
     const nameField = screen.getByTestId(field)
     fireEvent.click(nameField)
@@ -66,6 +59,33 @@ export const formSteps = ({
       expect(formField).toBeInTheDocument()
     })
   })
+
+  Then(
+    /^The user should see the following text fields placeholder:$/,
+    dataTable => {
+      const fields = dataTable.map(row => row.field)
+      const placeholders = dataTable.map(row => row.placeholder)
+
+      fields.forEach((field, index) => {
+        const formField = screen.getByTestId(field)
+        expect(formField).toHaveAttribute('placeholder', placeholders[index])
+      })
+    }
+  )
+
+  Then(
+    /^The user should see the following select fields placeholder:$/,
+    dataTable => {
+      const fields = dataTable.map(row => row.field)
+      const placeholders = dataTable.map(row => row.placeholder)
+
+      fields.forEach((field, index) => {
+        const formField = screen.getByTestId(field)
+        const formPlaceholder = formField.querySelectorAll('option')[0]
+        expect(formPlaceholder).toHaveTextContent(placeholders[index])
+      })
+    }
+  )
 }
 
 export default formSteps

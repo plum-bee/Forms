@@ -4,6 +4,7 @@ import { useState } from 'react'
 export default function TextField ({
   label,
   value,
+  placeholder,
   onChange,
   validator,
   testid
@@ -20,7 +21,9 @@ export default function TextField ({
     <label>
       {label}:
       <input
+        type='text'
         value={value}
+        placeholder={placeholder}
         onChange={handleChange}
         className={valid ? 'valid' : 'invalid'}
         data-testid={testid}
