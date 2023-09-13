@@ -84,6 +84,17 @@ Feature: Form Submission
             | 1234      |
             | ABC123    |
 
+    #TODO
+    Scenario: Fields placeholder
+        Given The user opens the form
+        Then The user should see the following field placeholder:
+            | field    | placeholder         |
+            | name     | Enter your name     |
+            | surname  | Enter your surname  |
+            | username | Enter your username |
+            | country  | Select a country    |
+            | dni      | Enter your ID       |
+
 
 # Scenario Outline: Name field invalid message
 #     Given The user opens the form
@@ -116,12 +127,6 @@ Feature: Form Submission
 #         | JOHN        | Username cannot contain name                 |
 #         | MIDUDEV1234 | Username cannot have more than 10 characters |
 
-
-
-
-
-
-
 # Scenario Outline: Invalid Argentina ID message
 #     Given The user opens the form
 #     And The user selects "Argentina" from the country dropdown
@@ -141,16 +146,6 @@ Feature: Form Submission
 #         | invalidId | error_message |
 #         | 12        | Invalid ID    |
 #         | XYZ1234   | Invalid ID    |
-
-# Scenario: Default field content
-#     Given The user opens the form
-#     Then The user should see the following default content:
-#         | field    | content               |
-#         | name     | Enter your name       |
-#         | surname  | Enter your nurname    |
-#         | username | Enter your username   |
-#         | country  | Select a country      |
-#         | id       | Enter your country ID |
 
 # Scenario: Submit button is disabled
 #     Given The user opens the form
