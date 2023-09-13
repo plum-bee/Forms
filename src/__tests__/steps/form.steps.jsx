@@ -28,10 +28,23 @@ export const formSteps = ({
     })
   })
 
+  When(/^The user clicks the "(.*)" dropdown$/, field => {
+    const nameField = screen.getByTestId(field)
+    fireEvent.click(nameField)
+  })
+
   When(/^The user enters "(.*)" as "(.*)"$/, (value, field) => {
     const nameField = screen.getByTestId(field)
     fireEvent.change(nameField, {
       target: { value }
+    })
+  })
+
+  Then(/^The user should see the following country options:$/, dataTable => {
+    const fields = dataTable.map(row => row.country)
+    fields.forEach(field => {
+      const formField = screen.getByTestId('country')
+      expect(formField).toHaveTextContent(field)
     })
   })
 

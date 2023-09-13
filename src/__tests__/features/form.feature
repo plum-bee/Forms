@@ -35,6 +35,14 @@ Feature: Form Submission
         When The user enters "MIDUDEV" as "username"
         Then The field "username" should be marked as "valid"
 
+    Scenario: Country options
+        Given The user opens the form
+        When The user clicks the "country" dropdown
+        Then The user should see the following country options:
+            | country   |
+            | Spain     |
+            | Argentina |
+
     Scenario Outline: Valid Spain ID
         Given The user opens the form
         And The user selects "Spain" from the country dropdown
@@ -108,13 +116,7 @@ Feature: Form Submission
 #         | JOHN        | Username cannot contain name                 |
 #         | MIDUDEV1234 | Username cannot have more than 10 characters |
 
-# Scenario: Country options
-#     Given The user opens the form
-#     When The user clicks the country dropdown
-#     Then The user should see the following country options:
-#         | country   |
-#         | Spain     |
-#         | Argentina |
+
 
 
 
