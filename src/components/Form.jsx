@@ -9,6 +9,7 @@ import {
 
 import TextField from './TextField.jsx'
 import SelectField from './SelectField.jsx'
+import FormButton from './FormButton.jsx'
 
 function Form () {
   const [name, setName] = useState()
@@ -67,7 +68,16 @@ function Form () {
         validator={value => isValidDNI(country, value)}
         testid={'dni'}
       />
+
+      <FormButton 
+        buttonName='Submit'
+        onClick={() => alert('Form submitted!')}
+        testid={'submit'}
+      />
+
     </form>
+
+    
   )
 }
 
