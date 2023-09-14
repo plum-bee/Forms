@@ -26,6 +26,11 @@ export const formSteps = ({
     fireEvent.click(nameField)
   })
 
+  When(/^The user clicks the "(.*)" button$/, () => {
+    const button = screen.getByTestId('submit')
+    fireEvent.click(button)
+  })
+
   When(/^The user enters "(.*)" as "(.*)"$/, (value, field) => {
     const nameField = screen.getByTestId(field)
     fireEvent.change(nameField, {
@@ -85,21 +90,17 @@ export const formSteps = ({
         expect(formPlaceholder).toHaveTextContent(placeholders[index])
       })
     }
-    )
-    
-    Then(/^The user should see the "(.*)" button disabled$/, (buttonName) => {
-      const button = screen.getByTestId(buttonName)
-      expect(button).toBeDisabled()
-    })
+  )
 
-    
-    Then(/^The user should see the "(.*)" button enabled$/, (buttonName) => {
-      const button = screen.getByTestId(buttonName)
-      expect(button).toBeEnabled()
-    })
-  
+  Then(/^The user should see the "(.*)" button disabled$/, buttonName => {
+    const button = screen.getByTestId(buttonName)
+    expect(button).toBeDisabled()
+  })
 
-  
+  Then(/^The user should see the "(.*)" button enabled$/, buttonName => {
+    const button = screen.getByTestId(buttonName)
+    expect(button).toBeEnabled()
+  })
 }
 
 export default formSteps

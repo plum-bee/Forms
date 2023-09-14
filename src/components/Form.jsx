@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { useState } from 'react'
 import {
   isUppercase,
@@ -19,6 +18,14 @@ function Form () {
   const [DNI, setDNI] = useState()
 
   const availableCountries = ['Spain', 'Argentina']
+
+  const clearForm = () => {
+    setName('')
+    setSurname('')
+    setUsername('')
+    setCountry('')
+    setDNI('')
+  }
 
   return (
     <form>
@@ -78,7 +85,7 @@ function Form () {
 
       <FormButton
         buttonName='Clear'
-        onClick={() => alert('Form clear!')}
+        onClick={() => clearForm()}
         isDisabled={false}
         testid={'clear'}
       />

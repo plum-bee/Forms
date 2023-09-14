@@ -24,3 +24,14 @@ dist-ssr
 *.sw?
 coverage/coverage-final.json
 coverage/clover.xml
+coverage/clover.xml
+coverage/coverage-final.json
+coverage/lcov-report/components/Form.jsx.html
+coverage/lcov-report/components/FormButton.jsx.html
+coverage/lcov-report/components/index.html
+coverage/lcov-report/components/SelectField.jsx.html
+coverage/lcov-report/components/TextField.jsx.html
+coverage/lcov-report/index.html
+coverage/lcov-report/utils/index.html
+coverage/lcov-report/utils/validators.js.html
+coverage/lcov.info

@@ -100,13 +100,38 @@ Feature: Form Submission
             | country | Select your country |
 
 
-Scenario: Submit button is disabled
-    Given The user opens the form
-    Then The user should see the "submit" button disabled
+    Scenario: Submit button is disabled
+        Given The user opens the form
+        Then The user should see the "submit" button disabled
 
-Scenario: Clear button is enabled
-    Given The user opens the form
-    Then The user should see the "clear" button enabled
+    Scenario: Clear button is enabled
+        Given The user opens the form
+        Then The user should see the "clear" button enabled
+
+    # Scenario: Submit button is enabled
+    #     Given The user opens the form
+    #     When The user enters "JOHN" as name
+    #     And The user enters "DOE" as surname
+    #     And The user enters "MIDUDEV" as username
+    #     And The user selects "Spain" from the country dropdown
+    #     And The user enters "12345678Z" in the ID field
+    #     Then The submit button should be enabled
+
+    Scenario: Clear button
+        Given The user opens the form
+        When The user enters "JOHN" as "name"
+        And The user enters "DOE" as "surname"
+        And The user enters "MIDUDEV" as "username"
+        And The user selects "Spain" from the country dropdown
+        And The user enters "<field>" as "dni"
+        And The user clicks the "clear" button
+        Then The user should see the following text fields placeholder:
+            | field    | placeholder         |
+            | name     | Enter your name     |
+            | surname  | Enter your surname  |
+            | username | Enter your username |
+            | dni      | Enter your DNI      |
+
 
 
 # Scenario Outline: Name field invalid message
@@ -164,14 +189,6 @@ Scenario: Clear button is enabled
 #     Given The user opens the form
 #     Then The user should see the submit button disabled
 
-# Scenario: Submit button is enabled
-#     Given The user opens the form
-#     When The user enters "JOHN" as name
-#     And The user enters "DOE" as surname
-#     And The user enters "MIDUDEV" as username
-#     And The user selects "Spain" from the country dropdown
-#     And The user enters "12345678Z" in the ID field
-#     Then The submit button should be enabled
 
 # Scenario: Form sumbited
 #     Given The user opens the form
@@ -183,21 +200,7 @@ Scenario: Clear button is enabled
 #     And The user clicks the submit button
 #     Then The user should see "Form submitted successfully!"
 
-# Scenario: Clear button
-#     Given The user opens the form
-#     When The user enters "JOHN" as name
-#     And The user enters "DOE" as surname
-#     And The user enters "MIDUDEV" as username
-#     And The user selects "Spain" from the country dropdown
-#     And The user enters "12345678Z" in the ID field
-#     And The user clicks the clear button
-#     Then The user should see the following default content:
-#         | field    | content               |
-#         | name     | Enter your name       |
-#         | surname  | Enter your nurname    |
-#         | username | Enter your username   |
-#         | country  | Select a country      |
-#         | id       | Enter your country ID |
+
 
 # Scenario Outline: Required field validation
 #     When The user types "<fieldData>" in the "<fieldName>" field
