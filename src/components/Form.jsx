@@ -17,6 +17,7 @@ function Form () {
   const [username, setUsername] = useState()
   const [country, setCountry] = useState()
   const [DNI, setDNI] = useState()
+  
 
   const availableCountries = ['Spain', 'Argentina']
 
@@ -72,7 +73,16 @@ function Form () {
       <FormButton 
         buttonName='Submit'
         onClick={() => alert('Form submitted!')}
+        isDisabled={false}
         testid={'submit'}
+
+      />
+
+      <FormButton 
+        buttonName='Clear'
+        onClick={() => alert('Form clear!')}
+        isDisabled={true}
+        testid={'clear'}
       />
 
     </form>

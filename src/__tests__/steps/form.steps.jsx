@@ -85,7 +85,21 @@ export const formSteps = ({
         expect(formPlaceholder).toHaveTextContent(placeholders[index])
       })
     }
-  )
+    )
+    
+    Then(/^The user should see the "(.*)" button disabled$/, (buttonName) => {
+      const button = screen.getByTestId(buttonName)
+      expect(button).toBeDisabled()
+    })
+
+    
+    Then(/^The user should see the "(.*)" button enabled$/, (buttonName) => {
+      const button = screen.getByTestId(buttonName)
+      expect(button).toBeEnabled()
+    })
+  
+
+  
 }
 
 export default formSteps

@@ -99,10 +99,14 @@ Feature: Form Submission
             | field   | placeholder         |
             | country | Select your country |
 
-#TODO
-# Scenario: Submit button is disabled
-#     Given The user opens the form
-#     Then The user should see the "submit" button disabled
+
+Scenario: Submit button is disabled
+    Given The user opens the form
+    Then The user should see the "submit" button disabled
+
+Scenario: Clear button is enabled
+    Given The user opens the form
+    Then The user should see the "clear" button enabled
 
 
 # Scenario Outline: Name field invalid message
