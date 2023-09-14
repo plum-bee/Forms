@@ -1,13 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-function FormButton({ buttonName, onClick, testid, isDisabled}) {
+function FormButton ({ buttonName, onClick, testid, isDisabled }) {
   return (
-    <button onClick={onClick} data-testid={testid} disabled={isDisabled?true:false}>
+    <button onClick={onClick} data-testid={testid} disabled={isDisabled}>
       {buttonName}
-      {/* {console.log(buttonName)}
-      {console.log(isDisabled)} */}
     </button>
-  );
+  )
 }
 
-export default FormButton;
+export default FormButton
