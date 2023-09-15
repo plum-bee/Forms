@@ -4,3 +4,10 @@
   padding: 2rem;
   text-align: center;
 }
+
+.valid {
+  border-color: green;
+}
+.invalid {
+  border-color: red;
+}

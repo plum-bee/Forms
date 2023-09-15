@@ -7,6 +7,7 @@ export default function TextField ({
   placeholder,
   onChange,
   validator,
+  isValid,
   testid
 }) {
   const [valid, setValid] = useState(false)
@@ -15,6 +16,7 @@ export default function TextField ({
     const value = input.target.value
     onChange(value)
     setValid(validator(value))
+    isValid(validator(value))
   }
 
   return (

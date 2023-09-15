@@ -108,14 +108,14 @@ Feature: Form Submission
         Given The user opens the form
         Then The user should see the "clear" button enabled
 
-    # Scenario: Submit button is enabled
-    #     Given The user opens the form
-    #     When The user enters "JOHN" as name
-    #     And The user enters "DOE" as surname
-    #     And The user enters "MIDUDEV" as username
-    #     And The user selects "Spain" from the country dropdown
-    #     And The user enters "12345678Z" in the ID field
-    #     Then The submit button should be enabled
+    Scenario: Submit button is enabled
+        Given The user opens the form
+        When The user enters "JOHN" as "name"
+        And The user enters "DOE" as "surname"
+        And The user enters "MIDUDEV" as "username"
+        And The user selects "Spain" from the country dropdown
+        And The user enters "12345678Z" as "dni"
+        Then The user should see the "submit" button enabled
 
     Scenario: Clear button
         Given The user opens the form
