@@ -38,5 +38,5 @@ const isArgentinaDNIValid = dni => {
 }
 
 export const isValidCountry = country => {
-  return country !== 'Select your country'
+  return country === 'Spain' || country === 'Argentina'
 }

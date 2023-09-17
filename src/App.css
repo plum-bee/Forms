@@ -5,9 +5,81 @@
   text-align: center;
 }
 
-.valid {
-  border-color: green;
+.form-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f2f2f2;
+  border-radius: 10px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
-.invalid {
-  border-color: red;
+
+.form-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+label {
+  display: inline-block;
+  text-align: left;
+  font-size: 1.1rem;
+  margin: 20px;
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 580px;
+  transition: border 0.3s ease;
+}
+
+.valid {
+  border-color: #6bff6b;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.submit:hover {
+  background: #2563eb;
+}
+
+.submit:active {
+  background: #1d4ed8;
+}
+
+.clear {
+  background: #f9f9f9;
+  border: 2px solid #ddd;
+}
+
+.clear:hover {
+  background: #f2f2f2;
+}
+
+.clear:active {
+  background: #e5e5e5;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
