@@ -1,14 +1,11 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   isUppercase,
   isValidUsername,
+  isValidCountry,
   isValidDNI
 } from '../utils/validators.js'
-
-import TextField from './TextField.jsx'
-import SelectField from './SelectField.jsx'
-import FormButton from './FormButton.jsx'
 
 function Form () {
   const [formData, setFormData] = useState({
@@ -19,16 +16,32 @@ function Form () {
     dni: ''
   })
 
-  const [selectedCountry, setSelectedCountry] = useState('placeholder')
+  const [validData, setValidData] = useState({
+    name: false,
+    surname: false,
+    username: false,
+    country: false,
+    dni: false
+  })
 
   const handleChange = event => {
-    const { field, value } = event.target
-    setFormData(prevFormData => ({ ...prevFormData, [field]: value }))
+    const { name, value } = event.target
+    setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
   }
 
-  const handleDropdownChange = event => {
-    setSelectedCountry(event.target.value)
+  const isFormValid = validData => {
+    return Object.values(validData).every(value => value === true)
   }
+
+  useEffect(() => {
+    setValidData({
+      name: isUppercase(formData.name),
+      surname: isUppercase(formData.surname),
+      username: isValidUsername(formData.name, formData.username),
+      country: isValidCountry(formData.country),
+      dni: isValidDNI(formData.country, formData.dni)
+    })
+  }, [formData])
 
   const clearForm = () => {
     setFormData({
@@ -49,8 +62,10 @@ function Form () {
         type='text'
         id='name'
         name='name'
+        placeholder='Enter your name'
         value={formData.name}
         onChange={handleChange}
+        className={validData.name ? 'valid' : 'invalid'}
         data-testid='name'
       />
 
@@ -59,8 +74,10 @@ function Form () {
         type='text'
         id='surname'
         name='surname'
+        placeholder='Enter your surname'
         value={formData.surname}
         onChange={handleChange}
+        className={validData.surname ? 'valid' : 'invalid'}
         data-testid='surname'
       />
 
@@ -69,33 +86,49 @@ function Form () {
         type='text'
         id='username'
         name='username'
+        placeholder='Enter your username'
         value={formData.username}
         onChange={handleChange}
+        className={validData.username ? 'valid' : 'invalid'}
         data-testid='username'
       />
 
-      <label>
-        Select an option:
-        <select
-          value={selectedCountry}
-          onChange={handleDropdownChange}
-          data-testid='country'
-        >
-          <option value='placeholder'>Select your country</option>
-          <option value='option2'>Spain</option>
-          <option value='option3'>Argentina</option>
-        </select>
-      </label>
+      <label htmlFor='country'>Select an option:</label>
+      <select
+        id='country'
+        name='country'
+        value={formData.country}
+        onChange={handleChange}
+        data-testid='country'
+      >
+        <option>Select your country</option>
+        <option>Spain</option>
+        <option>Argentina</option>
+      </select>
 
       <label htmlFor='dni'>DNI:</label>
       <input
         type='text'
         id='dni'
         name='dni'
+        placeholder='Enter your DNI'
         value={formData.dni}
         onChange={handleChange}
+        className={validData.dni ? 'valid' : 'invalid'}
         data-testid='dni'
       />
+
+      <button
+        type='submit'
+        data-testid='submit'
+        disabled={!isFormValid(validData)}
+      >
+        Submit
+      </button>
+
+      <button type='reset' onClick={clearForm} data-testid='clear'>
+        Clear
+      </button>
     </form>
   )
 }

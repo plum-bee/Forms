@@ -1,10 +1,13 @@
 export const isUppercase = value => {
-  return value === value.toUpperCase()
+  return value === value.toUpperCase() && value.length > 0
 }
 
 export const isValidUsername = (name, username) => {
   return (
-    !username.includes(name) && isUppercase(username) && username.length <= 10
+    !username.includes(name) &&
+    isUppercase(username) &&
+    username.length <= 10 &&
+    username.length > 0
   )
 }
 
@@ -18,7 +21,6 @@ export const isValidDNI = (country, dni) => {
       validationResult = isArgentinaDNIValid(dni)
       break
     default:
-      validationResult = false
       break
   }
   return validationResult
@@ -33,4 +35,8 @@ const isSpanishDNIValid = dni => {
 
 const isArgentinaDNIValid = dni => {
   return dni.length === 11 && !isNaN(dni)
+}
+
+export const isValidCountry = country => {
+  return country !== 'Select your country'
 }

@@ -1,8 +1,10 @@
 Feature: Form Submission
 
+
     Scenario: Form title
         Given The user opens the form
         Then The user should see "Minesweeper Form"
+
 
     Scenario: Form fields
         Given The user opens the form
@@ -98,7 +100,6 @@ Feature: Form Submission
         Then The user should see the following select fields placeholder:
             | field   | placeholder         |
             | country | Select your country |
-
 
     Scenario: Submit button is disabled
         Given The user opens the form
