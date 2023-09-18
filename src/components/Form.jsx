@@ -33,7 +33,7 @@ function Form () {
 
   const handleBlur = event => {
     const { id, value } = event.target
-
+  
     if (value === '' || value === 'Select your country') {
       setInputErrors(prevErrors => ({
         ...prevErrors,
@@ -44,8 +44,16 @@ function Form () {
         ...prevErrors,
         [id]: ''
       }))
+  
+      if (!isUppercase(value)) {
+        setInputErrors(prevErrors => ({
+          ...prevErrors,
+          [id]: `${id} should be in uppercase`,
+        }))
+      }
     }
   }
+  
 
   const isFormValid = validData => {
     return Object.values(validData).every(value => value === true)
