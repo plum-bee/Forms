@@ -145,6 +145,7 @@ Feature: Form Submission
             | name     | JOHN      | name is required     |
             | surname  | DOE       | surname is required  |
             | username | MIDUDEV   | username is required |
+            | country  | Spain     | country is required  |
             | dni      | 12345678Z | dni is required      |
 
 

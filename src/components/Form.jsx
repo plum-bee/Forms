@@ -34,7 +34,7 @@ function Form () {
   const handleBlur = event => {
     const { id, value } = event.target
 
-    if (value === '') {
+    if (value === '' || value === 'Select your country') {
       setInputErrors(prevErrors => ({
         ...prevErrors,
         [id]: `${id} is required`
@@ -141,6 +141,7 @@ function Form () {
           <option>Argentina</option>
         </select>
       </label>
+      {inputErrors.country && <p>{inputErrors.country}</p>}
 
       <label htmlFor='dni'>
         DNI:
