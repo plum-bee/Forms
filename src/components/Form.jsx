@@ -24,9 +24,27 @@ function Form () {
     dni: false
   })
 
+  const [inputErrors, setInputErrors] = useState({})
+
   const handleChange = event => {
     const { name, value } = event.target
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
+  }
+
+  const handleBlur = event => {
+    const { id, value } = event.target
+
+    if (value === '') {
+      setInputErrors(prevErrors => ({
+        ...prevErrors,
+        [id]: `${id} is required`
+      }))
+    } else {
+      setInputErrors(prevErrors => ({
+        ...prevErrors,
+        [id]: ''
+      }))
+    }
   }
 
   const isFormValid = validData => {
@@ -68,10 +86,12 @@ function Form () {
           placeholder='Enter your name'
           value={formData.name}
           onChange={handleChange}
-          className={validData.name ? 'valid' : ''}
+          onBlur={handleBlur}
+          className={validData.name ? 'valid' : 'invalid'}
           data-testid='name'
         />
       </label>
+      {inputErrors.name && <p>{inputErrors.name}</p>}
 
       <label htmlFor='surname'>
         Surname:
@@ -82,10 +102,12 @@ function Form () {
           placeholder='Enter your surname'
           value={formData.surname}
           onChange={handleChange}
-          className={validData.surname ? 'valid' : ''}
+          onBlur={handleBlur}
+          className={validData.surname ? 'valid' : 'invalid'}
           data-testid='surname'
         />
       </label>
+      {inputErrors.surname && <p>{inputErrors.surname}</p>}
 
       <label htmlFor='username'>
         Username:
@@ -96,10 +118,12 @@ function Form () {
           placeholder='Enter your username'
           value={formData.username}
           onChange={handleChange}
-          className={validData.username ? 'valid' : ''}
+          onBlur={handleBlur}
+          className={validData.username ? 'valid' : 'invalid'}
           data-testid='username'
         />
       </label>
+      {inputErrors.username && <p>{inputErrors.username}</p>}
 
       <label htmlFor='country'>
         Select an option:
@@ -108,7 +132,8 @@ function Form () {
           name='country'
           value={formData.country}
           onChange={handleChange}
-          className={validData.country ? 'valid' : ''}
+          onBlur={handleBlur}
+          className={validData.country ? 'valid' : 'invalid'}
           data-testid='country'
         >
           <option>Select your country</option>
@@ -126,10 +151,12 @@ function Form () {
           placeholder='Enter your DNI'
           value={formData.dni}
           onChange={handleChange}
-          className={validData.dni ? 'valid' : ''}
+          onBlur={handleBlur}
+          className={validData.dni ? 'valid' : 'invalid'}
           data-testid='dni'
         />
       </label>
+      {inputErrors.dni && <p>{inputErrors.dni}</p>}
 
       <button
         type='submit'

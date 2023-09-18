@@ -21,6 +21,18 @@ export const formSteps = ({
     })
   })
 
+  And(/^The user erases the "(.*)" value$/, field => {
+    const nameField = screen.getByTestId(field)
+    fireEvent.change(nameField, {
+      target: { value: '' }
+    })
+  })
+
+  And(/^The user clicks away from the "(.*)" area$/, field => {
+    const nameField = screen.getByTestId(field)
+    fireEvent.blur(nameField)
+  })
+
   When(/^The user clicks the "(.*)" dropdown$/, field => {
     const nameField = screen.getByTestId(field)
     fireEvent.click(nameField)
@@ -54,6 +66,11 @@ export const formSteps = ({
   Then(/^The user should see "([^"]*)"$/, value => {
     const formTitle = screen.getByTestId('formtitle')
     expect(formTitle).toHaveTextContent(value)
+  })
+
+  Then(/^The user should see the following "([^"]*)"$/, errorMessage => {
+    const error = screen.getByText(errorMessage)
+    expect(error).toBeInTheDocument()
   })
 
   Then(/^The user should see the following fields:$/, dataTable => {

@@ -124,7 +124,7 @@ Feature: Form Submission
         And The user enters "DOE" as "surname"
         And The user enters "MIDUDEV" as "username"
         And The user selects "Spain" from the country dropdown
-        And The user enters "<field>" as "dni"
+        And The user enters "12345678Z" as "dni"
         And The user clicks the "clear" button
         Then The user should see the following text fields placeholder:
             | field    | placeholder         |
@@ -132,6 +132,20 @@ Feature: Form Submission
             | surname  | Enter your surname  |
             | username | Enter your username |
             | dni      | Enter your DNI      |
+
+
+    Scenario Outline: Required field validation
+        Given The user opens the form
+        When The user enters "data" as "<field>"
+        And The user erases the "<field>" value
+        And The user clicks away from the "<field>" area
+        Then The user should see the following "<error_message>"
+        Examples:
+            | field    | data      | error_message        |
+            | name     | JOHN      | name is required     |
+            | surname  | DOE       | surname is required  |
+            | username | MIDUDEV   | username is required |
+            | dni      | 12345678Z | dni is required      |
 
 
 
@@ -200,16 +214,3 @@ Feature: Form Submission
 #     And The user enters "12345678Z" in the ID field
 #     And The user clicks the submit button
 #     Then The user should see "Form submitted successfully!"
-
-
-
-# Scenario Outline: Required field validation
-#     When The user types "<fieldData>" in the "<fieldName>" field
-#     And The user clears the "<fieldName>" field
-#     Then The user should see the following "<error_message>"
-#     Examples:
-#         | fieldName | validData | error_message          |
-#         | name      | John      | This field is required |
-#         | surname   | Doe       | This field is required |
-#         | username  | jdoe123   | This field is required |
-#         | id        | 12345678Z | This field is required |

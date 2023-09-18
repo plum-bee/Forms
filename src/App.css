@@ -35,6 +35,22 @@ input {
   transition: border 0.3s ease;
 }
 
+p {
+  color: red;
+  text-align: left;
+  font-size: 15px;
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 600px;
+  transition: border 0.3s ease;
+}
+
 .valid {
   border-color: #6bff6b;
 }
@@ -45,8 +61,11 @@ input:focus {
 }
 
 button {
+  margin-right: 10px;
   padding: 10px 15px;
   border: none;
+  width: 100px;
+  margin-top: 15px;
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
@@ -56,6 +75,7 @@ button {
 .submit {
   background: #3b82f6;
   color: #fff;
+  border: 2px solid #2563eb;
 }
 
 .submit:hover {
