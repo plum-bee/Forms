@@ -40,3 +40,29 @@ const isArgentinaDNIValid = dni => {
 export const isValidCountry = country => {
   return country === 'Spain' || country === 'Argentina'
 }
+
+export const isCheckError = (fieldId, fieldValue) => {
+  let error = null;
+
+  switch (fieldId) {
+    case 'username':
+      if (fieldValue.length > 10) {
+        error = `${fieldId} cannot exceed 10 characters`
+      } else if (fieldValue.length === 11) {
+        error = `${fieldId} cannot have 11 characters`
+      } else if (!isUppercase(fieldValue)) { 
+        error = `${fieldId} must be in uppercase`
+      }
+      break;
+    case 'name':
+    case 'surname':
+      if (!isUppercase(fieldValue)) {
+        error = `${fieldId} must be in uppercase`
+      }
+      break
+    default:
+      break
+  }
+
+  return error
+};

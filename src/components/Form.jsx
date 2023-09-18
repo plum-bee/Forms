@@ -4,7 +4,8 @@ import {
   isUppercase,
   isValidUsername,
   isValidCountry,
-  isValidDNI
+  isValidDNI,
+  isCheckError
 } from '../utils/validators.js'
 
 function Form () {
@@ -30,31 +31,22 @@ function Form () {
     const { name, value } = event.target
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
   }
-
   const handleBlur = event => {
     const { id, value } = event.target
+    let error = null;
   
-    if (value === '' || value === 'Select your country') {
-      setInputErrors(prevErrors => ({
-        ...prevErrors,
-        [id]: `${id} is required`
-      }))
+    if (value === '') {
+      error = `${id} is required`
     } else {
-      setInputErrors(prevErrors => ({
-        ...prevErrors,
-        [id]: ''
-      }))
-  
-      if (!isUppercase(value)) {
-        setInputErrors(prevErrors => ({
-          ...prevErrors,
-          [id]: `${id} should be in uppercase`,
-        }))
-      }
+      error = isCheckError(id, value)
     }
-  }
   
-
+    setInputErrors(prevErrors => ({
+      ...prevErrors,
+      [id]: error,
+    }));
+  };
+    
   const isFormValid = validData => {
     return Object.values(validData).every(value => value === true)
   }
@@ -149,7 +141,6 @@ function Form () {
           <option>Argentina</option>
         </select>
       </label>
-      {inputErrors.country && <p>{inputErrors.country}</p>}
 
       <label htmlFor='dni'>
         DNI:
