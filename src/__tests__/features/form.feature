@@ -133,7 +133,6 @@ Feature: Form Submission
             | username | Enter your username |
             | dni      | Enter your DNI      |
 
-
     Scenario Outline: Required field validation
         Given The user opens the form
         When The user enters "data" as "<field>"
@@ -147,8 +146,6 @@ Feature: Form Submission
             | username | MIDUDEV   | username is required |
             | country  | Spain     | country is required  |
             | dni      | 12345678Z | dni is required      |
-
-
 
 # Scenario Outline: Name field invalid message
 #     Given The user opens the form

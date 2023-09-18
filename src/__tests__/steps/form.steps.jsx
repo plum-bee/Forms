@@ -38,8 +38,8 @@ export const formSteps = ({
     fireEvent.click(nameField)
   })
 
-  When(/^The user clicks the "(.*)" button$/, () => {
-    const button = screen.getByTestId('submit')
+  When(/^The user clicks the "(.*)" button$/, buttonName => {
+    const button = screen.getByTestId(buttonName)
     fireEvent.click(button)
   })
 
