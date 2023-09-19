@@ -36,9 +36,15 @@ function Form () {
     let error = null;
   
     if (value === '') {
-      error = `${id} is required`
+      error = `${id} is required`;
+    } else if (id === 'username') {
+      if (value.length > 10) {
+        error = 'Username should not exceed 10 characters';
+      } else if (!validData.username) {
+        error = 'Username is incorrect';
+      }
     } else {
-      error = isCheckError(id, value)
+      error = isCheckError(id, value);
     }
   
     setInputErrors(prevErrors => ({
