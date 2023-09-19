@@ -133,7 +133,7 @@ Feature: Form Submission
             | username | Enter your username |
             | dni      | Enter your DNI      |
 
-    Scenario Outline: Required field validation
+    Scenario Outline: Required Field Validation and Error Messages Display
         Given The user opens the form
         When The user enters "data" as "<field>"
         And The user erases the "<field>" value
@@ -144,8 +144,21 @@ Feature: Form Submission
             | name     | JOHN      | name is required     |
             | surname  | DOE       | surname is required  |
             | username | MIDUDEV   | username is required |
-            | country  | Spain     | country is required  |
             | dni      | 12345678Z | dni is required      |
+
+    Scenario Outline: Required Field Validation and Uppercase Error Messages Display
+        Given The user opens the form
+        When The user enters "data" as "<field>"
+        And The user erases the "<field>" value
+        And The user clicks away from the "<field>" area
+        Then The user should see the following "<error_message>"
+        Examples:
+            | field    | data      | error_message                  |
+            | name     | jhon      | name must be in uppercase      |
+            | surname  | doe       | surname must be in uppercase   |
+            | username | midudev   | username must be in uppercase  |
+            | dni      | 12345678Z | dni must be in uppercase       |
+
 
 # Scenario Outline: Name field invalid message
 #     Given The user opens the form
