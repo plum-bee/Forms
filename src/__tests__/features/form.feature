@@ -1,12 +1,12 @@
 Feature: Form Submission
 
 
-    Scenario: Form title
+    Scenario: Verifying 'Minesweeper Form' Title on Page Load
         Given The user opens the form
         Then The user should see "Minesweeper Form"
 
 
-    Scenario: Form fields
+    Scenario: Verifying Form Fields on Page Load
         Given The user opens the form
         Then The user should see the following fields:
             | field    |
@@ -16,28 +16,28 @@ Feature: Form Submission
             | country  |
             | dni      |
 
-    Scenario: Name field valid
+    Scenario: Validating the Name Field with upperCase letter (Valid)
         Given The user opens the form
         When The user enters "JOHN" as "name"
         Then The field "name" should be marked as "valid"
 
-    # Scenario: Name field invalid
+    # Scenario: Validating the Name Field with upperCase letter (Invalid)
     #     Given The user opens the form
     #     When The user enters "john" as "name"
     #     Then The field "name" should be marked as "invalid"
 
-    Scenario: Surname field valid
+    Scenario: Validating the Surname Field with upperCase letter (Valid)
         Given The user opens the form
         When The user enters "DOE" as "surname"
         Then The field "surname" should be marked as "valid"
 
-    Scenario: Username field valid
+    Scenario: Validating the Username Field with upperCase letter (Valid)
         Given The user opens the form
         And The user enters "JOHN" as "name"
         When The user enters "MIDUDEV" as "username"
         Then The field "username" should be marked as "valid"
 
-    Scenario: Country options
+    Scenario: Checking Country Options in the Dropdown Menu
         Given The user opens the form
         When The user clicks the "country" dropdown
         Then The user should see the following country options:
@@ -45,7 +45,7 @@ Feature: Form Submission
             | Spain     |
             | Argentina |
 
-    Scenario Outline: Valid Spain ID
+    Scenario Outline: Validating Spanish ID Numbers
         Given The user opens the form
         And The user selects "Spain" from the country dropdown
         When The user enters "<id>" as "dni"
@@ -56,7 +56,7 @@ Feature: Form Submission
             | 87654321X |
             | 12398764Q |
 
-    Scenario Outline: Valid Argentina ID
+    Scenario Outline: Validating Argentina ID Numbers
         Given The user opens the form
         And The user selects "Argentina" from the country dropdown
         When The user enters "<id>" as "dni"
@@ -66,7 +66,7 @@ Feature: Form Submission
             | 99999999999 |
             | 12345678901 |
 
-    Scenario Outline: Invalid Spain ID
+    Scenario Outline: Invalid Spanish ID Numbers
         Given The user opens the form
         And The user selects "Spain" from the country dropdown
         When The user enters "<invalidId>" as "dni"
@@ -76,7 +76,7 @@ Feature: Form Submission
             | 12        |
             | XYZ1234   |
 
-    Scenario Outline: Invalid Argentina ID
+    Scenario Outline: Invalid Argentina ID Numbers
         Given The user opens the form
         And The user selects "Argentina" from the country dropdown
         When The user enters "<invalidId>" as "dni"
@@ -86,7 +86,7 @@ Feature: Form Submission
             | 1234      |
             | ABC123    |
 
-    Scenario: Text fields placeholder
+    Scenario: Checking Text Fields' Placeholders on Form Load
         Given The user opens the form
         Then The user should see the following text fields placeholder:
             | field    | placeholder         |
@@ -95,21 +95,21 @@ Feature: Form Submission
             | username | Enter your username |
             | dni      | Enter your DNI      |
 
-    Scenario: Select fields placeholder
+    Scenario: Checking Select Field's Placeholder on Form Load
         Given The user opens the form
         Then The user should see the following select fields placeholder:
             | field   | placeholder         |
             | country | Select your country |
 
-    Scenario: Submit button is disabled
+    Scenario: Verifying the Initial State of the Submit Button (Disabled)
         Given The user opens the form
         Then The user should see the "submit" button disabled
 
-    Scenario: Clear button is enabled
+    Scenario: Verifying the Initial State of the Clear Button (Enabled)
         Given The user opens the form
         Then The user should see the "clear" button enabled
 
-    Scenario: Submit button is enabled
+    Scenario: Enabling the Submit Button After Valid Form Input
         Given The user opens the form
         When The user enters "JOHN" as "name"
         And The user enters "DOE" as "surname"
@@ -118,7 +118,7 @@ Feature: Form Submission
         And The user enters "12345678Z" as "dni"
         Then The user should see the "submit" button enabled
 
-    Scenario: Clear button
+    Scenario:  Clearing Form Fields with the 'Clear' Button
         Given The user opens the form
         When The user enters "JOHN" as "name"
         And The user enters "DOE" as "surname"
@@ -133,7 +133,7 @@ Feature: Form Submission
             | username | Enter your username |
             | dni      | Enter your DNI      |
 
-    Scenario Outline: Required field validation
+    Scenario Outline: Validating Required Fields with Error Messages
         Given The user opens the form
         When The user enters "data" as "<field>"
         And The user erases the "<field>" value
