@@ -1,12 +1,12 @@
 Feature: Form Submission
-
+    Valid fields will have a green border
+    Invalid fields will have a message indicating the error
 
     Scenario: Form title
         Given The user opens the form
         Then The user should see "Minesweeper Form"
 
-
-    Scenario: Form fields
+    Scenario: Validate user form contain necessary fields
         Given The user opens the form
         Then The user should see the following fields:
             | field    |
@@ -16,7 +16,7 @@ Feature: Form Submission
             | country  |
             | dni      |
 
-    Scenario: Name field valid
+    Scenario: Validate name field contains only uppercase letters
         Given The user opens the form
         When The user enters "JOHN" as "name"
         Then The field "name" should be marked as "valid"
@@ -26,7 +26,7 @@ Feature: Form Submission
     #     When The user enters "john" as "name"
     #     Then The field "name" should be marked as "invalid"
 
-    Scenario: Surname field valid
+    Scenario: Validate surname field contains only uppercase letters
         Given The user opens the form
         When The user enters "DOE" as "surname"
         Then The field "surname" should be marked as "valid"

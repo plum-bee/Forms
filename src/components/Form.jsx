@@ -5,7 +5,7 @@ import {
   isValidUsername,
   isValidCountry,
   isValidDNI,
-  isCheckError
+  checkFieldError
 } from '../utils/validators.js'
 
 function Form () {
@@ -33,26 +33,14 @@ function Form () {
   }
   const handleBlur = event => {
     const { id, value } = event.target
-    let error = null;
-  
-    if (value === '') {
-      error = `${id} is required`;
-    } else if (id === 'username') {
-      if (value.length > 10) {
-        error = 'Username should not exceed 10 characters';
-      } else if (!validData.username) {
-        error = 'Username is incorrect';
-      }
-    } else {
-      error = isCheckError(id, value);
-    }
-  
+    const error = checkFieldError(id, value)
+
     setInputErrors(prevErrors => ({
       ...prevErrors,
-      [id]: error,
-    }));
-  };
-    
+      [id]: error
+    }))
+  }
+
   const isFormValid = validData => {
     return Object.values(validData).every(value => value === true)
   }
@@ -147,6 +135,7 @@ function Form () {
           <option>Argentina</option>
         </select>
       </label>
+      {inputErrors.country && <p>{inputErrors.country}</p>}
 
       <label htmlFor='dni'>
         DNI:

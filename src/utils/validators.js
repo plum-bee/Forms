@@ -41,28 +41,20 @@ export const isValidCountry = country => {
   return country === 'Spain' || country === 'Argentina'
 }
 
-export const isCheckError = (fieldId, fieldValue) => {
-  let error = null;
+export const checkFieldError = (id, formData) => {
+  let errorMessage = ''
+  let value = formData[id]
 
-  switch (fieldId) {
-    case 'username':
-      if (fieldValue.length > 10) {
-        error = `${fieldId} cannot exceed 10 characters`
-      } else if (fieldValue.length === 11) {
-        error = `${fieldId} cannot have 11 characters`
-      } else if (!isUppercase(fieldValue)) { 
-        error = `${fieldId} must be in uppercase`
-      }
-      break;
-    case 'name':
-    case 'surname':
-      if (!isUppercase(fieldValue)) {
-        error = `${fieldId} must be in uppercase`
-      }
-      break
-    default:
-      break
+  if (value === '') {
+    errorMessage = `${id} field is required.`
+  } else {
+    switch (id) {
+      case 'name':
+      case 'surname':
+        if (isUppercase(value)) {
+          errorMessage = `${id} must be in uppercase.`
+        }
+    }
   }
-
-  return error
-};
+  return errorMessage
+}
