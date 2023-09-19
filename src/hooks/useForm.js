@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { checkFieldError } from './validators.js'
+import { checkFieldError } from '../utils/validators.js'
 
 function useForm () {
   const [formData, setFormData] = useState({
@@ -17,8 +17,8 @@ function useForm () {
   }
 
   const handleBlur = event => {
-    const { id, value } = event.target
-    const errorMessage = checkFieldError(id, ...formData)
+    const { id } = event.target
+    const errorMessage = checkFieldError(id, formData)
 
     setInputErrors(prevErrors => ({
       ...prevErrors,
