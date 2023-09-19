@@ -43,17 +43,32 @@ export const isValidCountry = country => {
 
 export const checkFieldError = (id, formData) => {
   let errorMessage = ''
-  let value = formData[id]
+  let fieldValue = formData[id]
 
-  if (value === '') {
+  if (fieldValue === '') {
     errorMessage = `${id} field is required.`
   } else {
     switch (id) {
       case 'name':
       case 'surname':
-        if (isUppercase(value)) {
+        if (isUppercase(fieldValue)) {
           errorMessage = `${id} must be in uppercase.`
         }
+        break
+      case 'username':
+        if (fieldValue.length > 10) {
+          errorMessage = `${id} must be shorter than 10 characters.`
+        } else if (!isUppercase(fieldValue)) {
+          errorMessage = `${id} must be in uppercase.`
+        } else if (!isValidUsername(formData.name, fieldValue)) {
+          errorMessage = `${id} must not contain your name.`
+        }
+        break
+      case 'dni':
+        if (!isValidDNI(formData.country, fieldValue)) {
+          errorMessage = `${id} is not valid.`
+        }
+        break
     }
   }
   return errorMessage

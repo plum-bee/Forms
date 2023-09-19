@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import useForm from '../hooks/useForm.js'
 import {
   isUppercase,
   isValidUsername,
@@ -9,13 +10,15 @@ import {
 } from '../utils/validators.js'
 
 function Form () {
-  const [formData, setFormData] = useState({
-    name: '',
-    surname: '',
-    username: '',
-    country: '',
-    dni: ''
-  })
+  const { formData, inputErrors, handleChange, handleBlur } = useForm()
+
+  // const [formData, setFormData] = useState({
+  //   name: '',
+  //   surname: '',
+  //   username: '',
+  //   country: '',
+  //   dni: ''
+  // })
 
   const [validData, setValidData] = useState({
     name: false,
@@ -25,21 +28,21 @@ function Form () {
     dni: false
   })
 
-  const [inputErrors, setInputErrors] = useState({})
+  // const [inputErrors, setInputErrors] = useState({})
 
-  const handleChange = event => {
-    const { name, value } = event.target
-    setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
-  }
-  const handleBlur = event => {
-    const { id, value } = event.target
-    const error = checkFieldError(id, value)
+  // const handleChange = event => {
+  //   const { name, value } = event.target
+  //   setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
+  // }
+  // const handleBlur = event => {
+  //   const { id, value } = event.target
+  //   const error = checkFieldError(id, value)
 
-    setInputErrors(prevErrors => ({
-      ...prevErrors,
-      [id]: error
-    }))
-  }
+  //   setInputErrors(prevErrors => ({
+  //     ...prevErrors,
+  //     [id]: error
+  //   }))
+  // }
 
   const isFormValid = validData => {
     return Object.values(validData).every(value => value === true)
