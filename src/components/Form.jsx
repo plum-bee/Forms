@@ -8,7 +8,7 @@ import {
   isValidDNI
 } from '../utils/validators.js'
 import InputField from './InputField.jsx'
-
+import SelectField from './SelectField.jsx'
 function Form () {
   const { formData, validData, inputErrors, handleChange, handleBlur } =
     useForm()
@@ -112,7 +112,7 @@ function Form () {
         />
       </label>
       {inputErrors.username && <p>{inputErrors.username}</p>}
-
+{/* 
       <label htmlFor='country'>
         Select an option:
         <select
@@ -129,7 +129,19 @@ function Form () {
           <option>Argentina</option>
         </select>
       </label>
-      {inputErrors.country && <p>{inputErrors.country}</p>}
+      {inputErrors.country && <p>{inputErrors.country}</p>} */}
+
+      <SelectField
+        label='Name'
+        id='name'
+        name='name'
+        value={formData.name}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        isValid={validData.name}
+        className={validData.name ? 'valid' : 'invalid'}
+        error={inputErrors.name}
+      />
 
       <label htmlFor='dni'>
         DNI:
