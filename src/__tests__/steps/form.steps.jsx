@@ -73,6 +73,11 @@ export const formSteps = ({
     expect(error).toBeInTheDocument()
   })
 
+  Then(/^The user should see the following message "([^"]*)"$/, errorMessage => {
+    const error = screen.getByText(errorMessage)
+    expect(error).toBeInTheDocument()
+  })
+
   Then(/^The user should see the following fields:$/, dataTable => {
     const fields = dataTable.map(row => row.field)
 
