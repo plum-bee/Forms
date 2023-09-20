@@ -1,6 +1,7 @@
 import React from 'react'
 
 function InputField ({
+  label,
   id,
   name,
   placeholder,
@@ -12,7 +13,7 @@ function InputField ({
 }) {
   return (
     <label htmlFor={id}>
-      {name}:
+      {label}:
       <input
         type='text'
         id={id}

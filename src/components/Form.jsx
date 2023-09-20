@@ -5,12 +5,13 @@ import {
   isUppercase,
   isValidUsername,
   isValidCountry,
-  isValidDNI,
-  checkFieldError
+  isValidDNI
 } from '../utils/validators.js'
+import InputField from './InputField.jsx'
 
 function Form () {
-  const { formData, inputErrors, handleChange, handleBlur } = useForm()
+  const { formData, validData, inputErrors, handleChange, handleBlur } =
+    useForm()
 
   // const [formData, setFormData] = useState({
   //   name: '',
@@ -20,13 +21,13 @@ function Form () {
   //   dni: ''
   // })
 
-  const [validData, setValidData] = useState({
-    name: false,
-    surname: false,
-    username: false,
-    country: false,
-    dni: false
-  })
+  // const [validData, setValidData] = useState({
+  //   name: false,
+  //   surname: false,
+  //   username: false,
+  //   country: false,
+  //   dni: false
+  // })
 
   // const [inputErrors, setInputErrors] = useState({})
 
@@ -48,25 +49,17 @@ function Form () {
     return Object.values(validData).every(value => value === true)
   }
 
-  useEffect(() => {
-    setValidData({
-      name: isUppercase(formData.name),
-      surname: isUppercase(formData.surname),
-      username: isValidUsername(formData.name, formData.username),
-      country: isValidCountry(formData.country),
-      dni: isValidDNI(formData.country, formData.dni)
-    })
-  }, [formData])
+  // useEffect(() => {
+  //   setValidData({
+  //     name: isUppercase(formData.name),
+  //     surname: isUppercase(formData.surname),
+  //     username: isValidUsername(formData.name, formData.username),
+  //     country: isValidCountry(formData.country),
+  //     dni: isValidDNI(formData.country, formData.dni)
+  //   })
+  // }, [formData])
 
-  const clearForm = () => {
-    setFormData({
-      name: '',
-      surname: '',
-      username: '',
-      country: '',
-      dni: ''
-    })
-  }
+  const clearForm = () => {}
 
   return (
     <form className='form-container'>
@@ -74,21 +67,18 @@ function Form () {
         Minesweeper Form
       </h1>
 
-      <label htmlFor='name'>
-        Name:
-        <input
-          type='text'
-          id='name'
-          name='name'
-          placeholder='Enter your name'
-          value={formData.name}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          className={validData.name ? 'valid' : 'invalid'}
-          data-testid='name'
-        />
-      </label>
-      {inputErrors.name && <p>{inputErrors.name}</p>}
+      <InputField
+        label='Name'
+        id='name'
+        name='name'
+        placeholder='Enter your name'
+        value={formData.name}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        isValid={validData.name}
+        className={validData.name ? 'valid' : 'invalid'}
+        error={inputErrors.name}
+      />
 
       <label htmlFor='surname'>
         Surname:
@@ -100,6 +90,7 @@ function Form () {
           value={formData.surname}
           onChange={handleChange}
           onBlur={handleBlur}
+          is
           className={validData.surname ? 'valid' : 'invalid'}
           data-testid='surname'
         />

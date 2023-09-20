@@ -9,11 +9,23 @@ function useForm () {
     country: '',
     dni: ''
   })
+
+  const [validData, setValidData] = useState({
+    name: false,
+    surname: false,
+    username: false,
+    country: false,
+    dni: false
+  })
+
   const [inputErrors, setInputErrors] = useState({})
 
   const handleChange = event => {
     const { name, value } = event.target
     setFormData({ ...formData, [name]: value })
+    if (checkFieldError(value, formData) === '') {
+      setValidData({ ...validData, [name]: true })
+    }
   }
 
   const handleBlur = event => {
@@ -28,6 +40,7 @@ function useForm () {
 
   return {
     formData,
+    validData,
     inputErrors,
     handleChange,
     handleBlur
