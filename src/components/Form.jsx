@@ -10,8 +10,11 @@ import {
 import InputField from './InputField.jsx'
 
 function Form () {
-  const { formData, validData, inputErrors, handleChange, handleBlur } =
-    useForm()
+  const { formData, inputErrors, handleChange, handleBlur } = useForm()
+
+  const ejemplo [
+    name: isUpperCase
+  ]
 
   // const [formData, setFormData] = useState({
   //   name: '',
@@ -45,9 +48,9 @@ function Form () {
   //   }))
   // }
 
-  const isFormValid = validData => {
-    return Object.values(validData).every(value => value === true)
-  }
+  // const isFormValid = validData => {
+  //   return Object.values(validData).every(value => value === true)
+  // }
 
   // useEffect(() => {
   //   setValidData({
@@ -60,7 +63,6 @@ function Form () {
   // }, [formData])
 
   const clearForm = () => {}
-
   return (
     <form className='form-container'>
       <h1 className='form-title' data-testid='formtitle'>
@@ -75,9 +77,11 @@ function Form () {
         value={formData.name}
         handleChange={handleChange}
         handleBlur={handleBlur}
-        isValid={validData.name}
-        className={validData.name ? 'valid' : 'invalid'}
+        isValid={isUppercase}
         error={inputErrors.name}
+        onValidation={() => {
+          console.log('onValidation')
+        }}
       />
 
       <label htmlFor='surname'>
@@ -91,7 +95,6 @@ function Form () {
           onChange={handleChange}
           onBlur={handleBlur}
           is
-          className={validData.surname ? 'valid' : 'invalid'}
           data-testid='surname'
         />
       </label>
@@ -107,7 +110,6 @@ function Form () {
           value={formData.username}
           onChange={handleChange}
           onBlur={handleBlur}
-          className={validData.username ? 'valid' : 'invalid'}
           data-testid='username'
         />
       </label>
@@ -121,7 +123,6 @@ function Form () {
           value={formData.country}
           onChange={handleChange}
           onBlur={handleBlur}
-          className={validData.country ? 'valid' : 'invalid'}
           data-testid='country'
         >
           <option>Select your country</option>
@@ -141,7 +142,6 @@ function Form () {
           value={formData.dni}
           onChange={handleChange}
           onBlur={handleBlur}
-          className={validData.dni ? 'valid' : 'invalid'}
           data-testid='dni'
         />
       </label>
@@ -152,7 +152,6 @@ function Form () {
         data-testid='submit'
         onClick={window.alert.bind(null, 'Form submitted!')}
         className='submit'
-        disabled={!isFormValid(validData)}
       >
         Submit
       </button>

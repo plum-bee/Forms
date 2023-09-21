@@ -1,5 +1,5 @@
 export const isUppercase = value => {
-  return value === value.toUpperCase() && value.length > 0
+  return value && value === value.toUpperCase()
 }
 
 export const isValidUsername = (name, username) => {

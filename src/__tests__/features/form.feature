@@ -1,227 +1,164 @@
 Feature: Form Submission
-    Valid fields will have a green border
-    Invalid fields will have a message indicating the error
+    As a user:
+    - I want to fill the form with my personal data and submit it
+    - I want to see a window with my submitted data after submitting the form
 
-    Scenario: Form title
-        Given The user opens the form
-        Then The user should see "Minesweeper Form"
+    How to identify a valid field:
+    - Field border color is color green
 
-    Scenario: Validate user form contain necessary fields
-        Given The user opens the form
-        Then The user should see the following fields:
-            | field    |
-            | name     |
-            | surname  |
-            | username |
-            | country  |
-            | dni      |
+    How to identify an invalid field:
+    - Field border color is color red
+    - An error message is displayed below the field containing the error description
 
-    Scenario: Validate name field contains only uppercase letters
-        Given The user opens the form
-        When The user enters "JOHN" as "name"
-        Then The field "name" should be marked as "valid"
+    How to leave a field:
+    - Click away from the field
+    - Click on another field
+    - Tabbing to another field
 
-    # Scenario: Name field invalid
-    #     Given The user opens the form
-    #     When The user enters "john" as "name"
-    #     Then The field "name" should be marked as "invalid"
+    Background:
+        Given the user opens the form
 
-    Scenario: Validate surname field contains only uppercase letters
-        Given The user opens the form
-        When The user enters "DOE" as "surname"
-        Then The field "surname" should be marked as "valid"
-
-    Scenario: Username field valid
-        Given The user opens the form
-        And The user enters "JOHN" as "name"
-        When The user enters "MIDUDEV" as "username"
-        Then The field "username" should be marked as "valid"
-
-    Scenario: Country options
-        Given The user opens the form
-        When The user clicks the "country" dropdown
-        Then The user should see the following country options:
-            | country   |
-            | Spain     |
-            | Argentina |
-
-    Scenario Outline: Valid Spain ID
-        Given The user opens the form
-        And The user selects "Spain" from the country dropdown
-        When The user enters "<id>" as "dni"
-        Then The field "dni" should be marked as "valid"
+    Scenario Outline: Validate name field contains only uppercase letters
+        When the user enters "<name>" into the "name" field
+        Then the field "name" should be "<validation_result>"
         Examples:
-            | id        |
-            | 12345678Z |
-            | 87654321X |
-            | 12398764Q |
+            | name | validation_result |
+            | JOHN | valid             |
+            | john | invalid           |
+            | John | invalid           |
 
-    Scenario Outline: Valid Argentina ID
-        Given The user opens the form
-        And The user selects "Argentina" from the country dropdown
-        When The user enters "<id>" as "dni"
-        Then The field "dni" should be marked as "valid"
+    Scenario Outline: Validate surname field contains only uppercase letters
+        When the user enters "<surname>" into the "surname" field
+        Then the field "surname" should be "<validation_result>"
         Examples:
-            | id          |
-            | 99999999999 |
-            | 12345678901 |
+            | surname | validation_result |
+            | DOE     | valid             |
+            | doe     | invalid           |
+            | Doe     | invalid           |
 
-    Scenario Outline: Invalid Spain ID
-        Given The user opens the form
-        And The user selects "Spain" from the country dropdown
-        When The user enters "<invalidId>" as "dni"
-        Then The field "dni" should be marked as "invalid"
+    Scenario Outline: Validate username field contains only uppercase letters
+        When the user enters "<username>" into the "username" field
+        Then the field "username" should be "<validation_result>"
         Examples:
-            | invalidId |
-            | 12        |
-            | XYZ1234   |
+            | username | validation_result |
+            | MIDUDEV  | valid             |
+            | midudev  | invalid           |
+            | Midudev  | invalid           |
 
-    Scenario Outline: Invalid Argentina ID
-        Given The user opens the form
-        And The user selects "Argentina" from the country dropdown
-        When The user enters "<invalidId>" as "dni"
-        Then The field "dni" should be marked as "invalid"
+    Scenario Outline: Validate username field does not contain user's name
+        When the users enters "<name>" as "name"
+        And the user enters "<username>" into the "username" field
+        Then the field "username" should be "<validation_result>"
         Examples:
-            | invalidId |
-            | 1234      |
-            | ABC123    |
+            | name       | username | validation_result |
+            | JOHN       | JOHN     | invalid           |
+            | JOHN       | MIDUJOHN | invalid           |
+            | JOHN       | JOHN123  | invalid           |
+            | JULIO JOSE | JULIO    | invalid           |
+            | JULIO JOSE | JOSE     | invalid           |
 
-    Scenario: Text fields placeholder
-        Given The user opens the form
-        Then The user should see the following text fields placeholder:
-            | field    | placeholder         |
-            | name     | Enter your name     |
-            | surname  | Enter your surname  |
-            | username | Enter your username |
-            | dni      | Enter your DNI      |
-
-    Scenario: Select fields placeholder
-        Given The user opens the form
-        Then The user should see the following select fields placeholder:
-            | field   | placeholder         |
-            | country | Select your country |
-
-    Scenario: Submit button is disabled
-        Given The user opens the form
-        Then The user should see the "submit" button disabled
-
-    Scenario: Clear button is enabled
-        Given The user opens the form
-        Then The user should see the "clear" button enabled
-
-    Scenario: Submit button is enabled
-        Given The user opens the form
-        When The user enters "JOHN" as "name"
-        And The user enters "DOE" as "surname"
-        And The user enters "MIDUDEV" as "username"
-        And The user selects "Spain" from the country dropdown
-        And The user enters "12345678Z" as "dni"
-        Then The user should see the "submit" button enabled
-
-    Scenario: Clear button
-        Given The user opens the form
-        When The user enters "JOHN" as "name"
-        And The user enters "DOE" as "surname"
-        And The user enters "MIDUDEV" as "username"
-        And The user selects "Spain" from the country dropdown
-        And The user enters "12345678Z" as "dni"
-        And The user clicks the "clear" button
-        Then The user should see the following text fields placeholder:
-            | field    | placeholder         |
-            | name     | Enter your name     |
-            | surname  | Enter your surname  |
-            | username | Enter your username |
-            | dni      | Enter your DNI      |
-
-    Scenario Outline: Required Field Validation and Error Messages Display
-        Given The user opens the form
-        When The user enters "data" as "<field>"
-        And The user erases the "<field>" value
-        And The user clicks away from the "<field>" area
-        Then The user should see the following "<error_message>"
+    Scenario Outline: Validate username field does not contain more than 10 characters
+        When the user enters "<username>" into the "username" field
+        Then the field "username" should be "<validation_result>"
         Examples:
-            | field    | data      | error_message              |
-            | name     | JOHN      | name field is required.    |
-            | surname  | DOE       | surname field is required. |
-            | username | MIDUDEV   | username field is required.|
-            | dni      | 12345678Z | dni field is required.     |
+            | username    | validation_result |
+            | MIDUDEV     | valid             |
+            | MIDUDEV123  | valid             |
+            | MIDUDEV1234 | invalid           |
 
-    Scenario Outline: Required Field Validation and Uppercase Error Messages Display
-        Given The user opens the form
-        When The user enters "data" as "<field>"
-        And The user erases the "<field>" value
-        And The user clicks away from the "<field>" area
-        Then The user should see the following message "<error_message>"
+    Scenario Outline: Validate the selected country is not the default option
+        When the user selects "<country>" from the country dropdown
+        Then the field "country" should be "<validation_result>"
         Examples:
-            | field    | data      | error_message                  |
-            | name     | jhon      | name must be in uppercase.     |
-            | surname  | doe       | surname must be in uppercase.  |
-            | username | midudev   | username must be in uppercase. |
-            | dni      | 12345678Z | dni is not valid.              |
+            | country   | validation_result |
+            | Spain     | valid             |
+            | Argentina | valid             |
 
+    Scenario Outline: Display error message when the user leaves a field empty
+        When the user is in the '<field>' field
+        And the user leaves the field empty
+        Then the user should see the following message "<error_message>"
+        Examples:
+            | field    | error_message              |
+            | name     | name field is required     |
+            | surname  | surname field is required  |
+            | username | username field is required |
+            | country  | country field is required  |
+            | dni      | dni field is required      |
 
-# Scenario Outline: Name field invalid message
-#     Given The user opens the form
-#     When The users enters "<name>" as name
-#     Then The user should see the following "<error_message>"
-#     Examples:
-#         | name | error_message                            |
-#         | john | Name must contain only uppercase letters |
-#         | JoHn | Name must contain only uppercase letters |
+    Scenario Outline: Display error message when the user leaves a field in lowercase
+        When the user enters "<value>" into the "<field>" field
+        And the user leaves the field
+        Then the user should see the following message "<error_message>"
+        Examples:
+            | field    | value    | error_message                   |
+            | name     | john     | name must be in uppercase       |
+            | surname  | doe      | surname must be in uppercase    |
+            | username | midudev  | username must be in uppercase   |
+            | dni      | 12345678 | dni letter must be in uppercase |
 
+    Scenario Outline: Display error message when the username contains the user's name
+        When the user enters "<name>" into the "name" field
+        And the user enters "<username>" into the "username" field
+        Then the user should see the following message "<error_message>"
+        Examples:
+            | name | username | error_message                |
+            | JOHN | JOHN     | username cannot contain name |
+            | JOHN | MIDUJOHN | username cannot contain name |
+            | JOHN | JOHN123  | username cannot contain name |
 
-# Scenario Outline: Surname field invalid message
-#     Given The user opens the form
-#     When The users enters "<surname>" as surname
-#     Then The user should see the following "<error_message>"
-#     Examples:
-#         | surname | error_message                               |
-#         | doe     | Surname must contain only uppercase letters |
-#         | DoE     | Surname must contain only uppercase letters |
+    Scenario Outline: Display error message when the user enters a username with more than 10 characters
+        When the user enters "<username>" into the "username" field
+        Then the user should see the following message "<error_message>"
+        Examples:
+            | username    | error_message                           |
+            | MIDUDEV1234 | username cannot have more than 10 chars |
 
+    Scenario Outline: Display error message when the user enters an invalid DNI
+        When the user selects "<country>" from the country dropdown
+        And the user enters "<dni>" in the ID field
+        Then the user should see the following message "<error_message>"
+        Examples:
+            | country   | dni        | error_message    |
+            | Spain     | 12345687Z  | DNI is not valid |
+            | Spain     | 87354321X  | DNI is not valid |
+            | Argentina | 9999999999 | DNI is not valid |
+            | Argentina | 1234567890 | DNI is not valid |
 
-# Scenario Outline: Username field invalid message
-#     Given The user opens the form
-#     And The user enters "JOHN" as name
-#     When The users enters "<username>" as username
-#     Then The user should see the following "<error_message>"
-#     Examples:
-#         | username    | error_message                                |
-#         | john        | Username must contain only uppercase         |
-#         | JOHN        | Username cannot contain name                 |
-#         | MIDUDEV1234 | Username cannot have more than 10 characters |
+    Scenario: Submit button is disabled by default
+        Then the user should see the "submit" button "disabled"
 
-# Scenario Outline: Invalid Argentina ID message
-#     Given The user opens the form
-#     And The user selects "Argentina" from the country dropdown
-#     When The user enters "<invalidId>" in the ID field
-#     Then The user should see the following "<error_message>"
-#     Examples:
-#         | invalidId | error_message |
-#         | 1234      | Invalid ID    |
-#         | ABC123    | Invalid ID    |
+    Scenario: Submit button is enabled when all form fields are valid
+        When the user enters the following valid data
+            | field    | value     |
+            | name     | JOHN      |
+            | surname  | DOE       |
+            | country  | SPAIN     |
+            | username | MIDUDEV   |
+            | dni      | 12345678Z |
+        Then the user should see the "submit" button "enabled"
 
-# Scenario Outline: Invalid Spain ID message
-#     Given The user opens the form
-#     And The user selects "Spain" from the country dropdown
-#     When The user enters "<invalidId>" in the ID field
-#     Then The user should see the following "<error_message>"
-#     Examples:
-#         | invalidId | error_message |
-#         | 12        | Invalid ID    |
-#         | XYZ1234   | Invalid ID    |
+    Scenario: Clear button is always enabled
+        Then The user should see the "clear" button "enabled"
 
-# Scenario: Submit button is disabled
-#     Given The user opens the form
-#     Then The user should see the submit button disabled
+    Scenario: Clear button clears all form fields
+        When the user enters the following data
+            | field    | value     |
+            | name     | JOHN      |
+            | surname  | DOE       |
+            | country  | SPAIN     |
+            | username | MIDUDEV   |
+            | dni      | 12345678Z |
+        And the user clicks the "clear" button
+        Then the form data should be empty
 
-
-# Scenario: Form sumbited
-#     Given The user opens the form
-#     When The user enters "JOHN" as name
-#     And The user enters "DOE" as surname
-#     And The user enters "MIDUDEV" as username
-#     And The user selects "Spain" from the country dropdown
-#     And The user enters "12345678Z" in the ID field
-#     And The user clicks the submit button
-#     Then The user should see "Form submitted successfully!"
+    Scenario: Submit button opens a new window containing all the data submited
+        When the user enters the following valid data
+            | field    | value     |
+            | name     | JOHN      |
+            | surname  | DOE       |
+            | country  | SPAIN     |
+            | username | MIDUDEV   |
+            | dni      | 12345678Z |
+        And the user clicks the "submit" button
+        Then the user should see a new window containing the form data

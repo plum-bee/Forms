@@ -9,8 +9,12 @@ function InputField ({
   handleChange,
   handleBlur,
   isValid,
-  error
+  error,
+  onValidation
 }) {
+  if (isValid) {
+    onValidation()
+  }
   return (
     <label htmlFor={id}>
       {label}:
