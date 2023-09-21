@@ -21,7 +21,7 @@ function InputField ({
       <input
         type='text'
         id={id}
-        name={name}
+        name={id}
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
