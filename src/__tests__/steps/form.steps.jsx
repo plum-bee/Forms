@@ -4,22 +4,76 @@ import Form from '../../components/Form.jsx'
 import '@testing-library/jest-dom'
 import { fireEvent } from '@testing-library/react'
 
+const updateFieldValue = (field, value) => {
+  const fieldElement = screen.getByTestId(field)
+  fireEvent.change(fieldElement, {
+    target: { value: value }
+  })
+}
+
 export const formSteps = ({
   given: Given,
   and: And,
   when: When,
   then: Then
 }) => {
-  Given(/^The user opens the form$/, () => {
+  Given(/^the user opens the form$/, () => {
     render(<Form />)
   })
 
-  And(/^The user selects "(.*)" from the country dropdown$/, country => {
-    const countryField = screen.getByTestId('country')
-    fireEvent.change(countryField, {
-      target: { value: country }
+  When(/^the user enters "(.*)" in the "(.*)" field$/, (value, field) => {
+    updateFieldValue(field, value)
+  })
+
+  When(/^the user enters in the "(.*)" field$/, field => {
+    const fieldElement = screen.getByTestId(field)
+    fireEvent.focus(fieldElement)
+  })
+
+  When(
+    /^the user selects "(.*)" from the "(.*)" dropdown$/,
+    (field, option) => {
+      updateFieldValue(field, option)
+    }
+  )
+
+  When(/^the user enters the following data$/, dataTable => {
+    dataTable.forEach(row => {
+      updateFieldValue(row.field, row.value)
     })
   })
+
+  And(/^the user leaves the "(.*)" field empty$/, field => {
+    updateFieldValue(field, '')
+    fireEvent.blur(screen.getByTestId(field))
+  })
+
+  And(/^the user leaves the "(.*)" field$/, field => {
+    fireEvent.blur(screen.getByTestId(field))
+  })
+
+  Then(/^the field "(.*)" should be "(.*)"$/, (field, isValid) => {
+    const fieldElement = screen.getByTestId(field)
+    expect(fieldElement).toHaveClass(isValid)
+  })
+
+  Then(
+    /^the user should see the following input error message:"([^"]*)"$/,
+    errorMessage => {
+      const messageElement = screen.getByText(errorMessage)
+      expect(messageElement).toBeInTheDocument()
+    }
+  )
+
+  Then(/^the "(.*)" button should be "(.*)"$/, (buttonName, buttonState) => {
+    const button = screen.getByTestId(buttonName)
+    if (buttonState === 'enabled') {
+      expect(button).toBeEnabled()
+    } else if (buttonState === 'disabled') {
+      expect(button).toBeDisabled()
+    }
+  })
+  //old
 
   And(/^The user erases the "(.*)" value$/, field => {
     const nameField = screen.getByTestId(field)
@@ -43,13 +97,6 @@ export const formSteps = ({
     fireEvent.click(button)
   })
 
-  When(/^The user enters "(.*)" as "(.*)"$/, (value, field) => {
-    const nameField = screen.getByTestId(field)
-    fireEvent.change(nameField, {
-      target: { value: value }
-    })
-  })
-
   Then(/^The user should see the following country options:$/, dataTable => {
     const fields = dataTable.map(row => row.country)
     fields.forEach(field => {
@@ -58,25 +105,18 @@ export const formSteps = ({
     })
   })
 
-  Then(/^The field "(.*)" should be marked as "(.*)"$/, (field, isValid) => {
-    const nameField = screen.getByTestId(field)
-    expect(nameField).toHaveClass(isValid)
-  })
-
   Then(/^The user should see "([^"]*)"$/, value => {
     const formTitle = screen.getByTestId('formtitle')
     expect(formTitle).toHaveTextContent(value)
   })
 
-  Then(/^The user should see the following "([^"]*)"$/, errorMessage => {
-    const error = screen.getByText(errorMessage)
-    expect(error).toBeInTheDocument()
-  })
-
-  Then(/^The user should see the following message "([^"]*)"$/, errorMessage => {
-    const error = screen.getByText(errorMessage)
-    expect(error).toBeInTheDocument()
-  })
+  Then(
+    /^The user should see the following message "([^"]*)"$/,
+    errorMessage => {
+      const error = screen.getByText(errorMessage)
+      expect(error).toBeInTheDocument()
+    }
+  )
 
   Then(/^The user should see the following fields:$/, dataTable => {
     const fields = dataTable.map(row => row.field)
@@ -114,17 +154,10 @@ export const formSteps = ({
     }
   )
 
-  Then(/^The user should see the "(.*)" button disabled$/, buttonName => {
-    const button = screen.getByTestId(buttonName)
-    expect(button).toBeDisabled()
-  })
-
   Then(/^The user should see the "(.*)" button enabled$/, buttonName => {
     const button = screen.getByTestId(buttonName)
     expect(button).toBeEnabled()
   })
-
-  
 }
 
 export default formSteps

@@ -10,6 +10,11 @@ Feature: Form Submission
     - Field border color is color red
     - An error message is displayed below the field containing the error description
 
+    How to enter a field:
+    - Click on the field
+    - Tabbing to the field
+    - By default, the first field is selected
+
     How to leave a field:
     - Click away from the field
     - Click on another field
@@ -67,7 +72,7 @@ Feature: Form Submission
             | MIDUDEV1234 | invalid           |
 
     Scenario Outline: Validate the selected country is not the default option
-        When the user selects "<country>" from the country dropdown
+        When the user selects "<country>" from the "country" dropdown
         Then the field "country" should be "<validation_result>"
         Examples:
             | country   | validation_result |
@@ -75,9 +80,9 @@ Feature: Form Submission
             | Argentina | valid             |
 
     Scenario Outline: Display error message when the user leaves a field empty
-        When the user is in the '<field>' field
+        When the user enters in the '<field>' field
         And the user leaves the field empty
-        Then the user should see the following message "<error_message>"
+        Then the user should see the following input error message: "<error_message>"
         Examples:
             | field    | error_message              |
             | name     | name field is required     |
@@ -88,8 +93,8 @@ Feature: Form Submission
 
     Scenario Outline: Display error message when the user leaves a field in lowercase
         When the user enters "<value>" into the "<field>" field
-        And the user leaves the field
-        Then the user should see the following message "<error_message>"
+        And the user leaves the "<field>" field
+        Then the user should see the following input error message: "<error_message>"
         Examples:
             | field    | value    | error_message                   |
             | name     | john     | name must be in uppercase       |
@@ -100,7 +105,7 @@ Feature: Form Submission
     Scenario Outline: Display error message when the username contains the user's name
         When the user enters "<name>" into the "name" field
         And the user enters "<username>" into the "username" field
-        Then the user should see the following message "<error_message>"
+        Then the user should see the following input error message: "<error_message>"
         Examples:
             | name | username | error_message                |
             | JOHN | JOHN     | username cannot contain name |
@@ -109,15 +114,15 @@ Feature: Form Submission
 
     Scenario Outline: Display error message when the user enters a username with more than 10 characters
         When the user enters "<username>" into the "username" field
-        Then the user should see the following message "<error_message>"
+        Then the user should see the following input error message: "<error_message>"
         Examples:
             | username    | error_message                           |
             | MIDUDEV1234 | username cannot have more than 10 chars |
 
     Scenario Outline: Display error message when the user enters an invalid DNI
-        When the user selects "<country>" from the country dropdown
-        And the user enters "<dni>" in the ID field
-        Then the user should see the following message "<error_message>"
+        When the user selects "<country>" from the "country" dropdown
+        And the user enters "<dni>" into the "dni" field
+        Then the user should see the following input error message: "<error_message>"
         Examples:
             | country   | dni        | error_message    |
             | Spain     | 12345687Z  | DNI is not valid |
@@ -126,10 +131,10 @@ Feature: Form Submission
             | Argentina | 1234567890 | DNI is not valid |
 
     Scenario: Submit button is disabled by default
-        Then the user should see the "submit" button "disabled"
+        Then the "submit" button should be "disabled"
 
-    Scenario: Submit button is enabled when all form fields are valid
-        When the user enters the following valid data
+    Scenario: Submit button is enabled when the form data is valid
+        When the user enters "<value>" into the "<field>" field
             | field    | value     |
             | name     | JOHN      |
             | surname  | DOE       |
@@ -139,7 +144,7 @@ Feature: Form Submission
         Then the user should see the "submit" button "enabled"
 
     Scenario: Clear button is always enabled
-        Then The user should see the "clear" button "enabled"
+        Then the user should see the "clear" button "enabled"
 
     Scenario: Clear button clears all form fields
         When the user enters the following data
