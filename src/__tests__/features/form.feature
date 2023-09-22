@@ -133,7 +133,7 @@ Feature: Form Submission
     Scenario: Submit button is disabled by default
         Then the "submit" button should be "disabled"
 
-    Scenario: Submit button is enabled when the form data is valid
+    Scenario: Submit button is enabled when the all form fields are valid
         When the user enters the following data
             | field    | value     |
             | name     | JOHN      |
@@ -141,30 +141,29 @@ Feature: Form Submission
             | country  | SPAIN     |
             | username | MIDUDEV   |
             | dni      | 12345678Z |
-        And the user leaves the "dni" field
         Then the "submit" button should be "enabled"
 
     Scenario: Clear button is always enabled
         Then the "clear" button should be "enabled"
 
-    Scenario: Clear button clears all form fields
-        When the user enters the following data
+    Scenario: Clear button clears all the form data
+        And the user enters the following data
             | field    | value     |
             | name     | JOHN      |
             | surname  | DOE       |
             | country  | SPAIN     |
             | username | MIDUDEV   |
             | dni      | 12345678Z |
-        And the user clicks the "clear" button
+        When the user clicks the "clear" button
         Then the form data should be empty
 
     Scenario: Submit button opens a new window containing all the data submited
-        When the user enters the following data
+        And the user enters the following data
             | field    | value     |
             | name     | JOHN      |
             | surname  | DOE       |
             | country  | SPAIN     |
             | username | MIDUDEV   |
             | dni      | 12345678Z |
-        And the user clicks the "submit" button
+        When the user clicks the "submit" button
         Then the user should see a new window containing the form data
