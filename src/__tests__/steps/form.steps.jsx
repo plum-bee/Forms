@@ -4,6 +4,8 @@ import Form from '../../components/Form.jsx'
 import '@testing-library/jest-dom'
 import { fireEvent } from '@testing-library/react'
 
+const formFields = ['name', 'surname', 'username', 'country', 'dni']
+
 const updateFieldValue = (field, value) => {
   const fieldElement = screen.getByTestId(field)
   fireEvent.change(fieldElement, {
@@ -52,6 +54,10 @@ export const formSteps = ({
     fireEvent.blur(screen.getByTestId(field))
   })
 
+  And(/^the user clicks the "(.*)" button$/, buttonName => {
+    fireEvent.click(screen.getByTestId(buttonName))
+  })
+
   Then(/^the field "(.*)" should be "(.*)"$/, (field, isValid) => {
     const fieldElement = screen.getByTestId(field)
     expect(fieldElement).toHaveClass(isValid)
@@ -73,90 +79,21 @@ export const formSteps = ({
       expect(button).toBeDisabled()
     }
   })
-  //old
 
-  And(/^The user erases the "(.*)" value$/, field => {
-    const nameField = screen.getByTestId(field)
-    fireEvent.change(nameField, {
-      target: { value: '' }
+  Then(/^the form data should be empty$/, () => {
+    formFields.forEach(field => {
+      const fieldElement = screen.getByTestId(field)
+      expect(fieldElement).toHaveValue('')
     })
   })
 
-  And(/^The user clicks away from the "(.*)" area$/, field => {
-    const nameField = screen.getByTestId(field)
-    fireEvent.blur(nameField)
-  })
-
-  When(/^The user clicks the "(.*)" dropdown$/, field => {
-    const nameField = screen.getByTestId(field)
-    fireEvent.click(nameField)
-  })
-
-  When(/^The user clicks the "(.*)" button$/, buttonName => {
-    const button = screen.getByTestId(buttonName)
-    fireEvent.click(button)
-  })
-
-  Then(/^The user should see the following country options:$/, dataTable => {
-    const fields = dataTable.map(row => row.country)
-    fields.forEach(field => {
-      const formField = screen.getByTestId('country')
-      expect(formField).toHaveTextContent(field)
+  Then(/^the user should see a new window containing the form data$/, () => {
+    const newWindow = screen.getByTestId('form-data')
+    const formData = formFields.map(field => {
+      const fieldElement = screen.getByTestId(field)
+      return `${field}: ${fieldElement.value}`
     })
-  })
-
-  Then(/^The user should see "([^"]*)"$/, value => {
-    const formTitle = screen.getByTestId('formtitle')
-    expect(formTitle).toHaveTextContent(value)
-  })
-
-  Then(
-    /^The user should see the following message "([^"]*)"$/,
-    errorMessage => {
-      const error = screen.getByText(errorMessage)
-      expect(error).toBeInTheDocument()
-    }
-  )
-
-  Then(/^The user should see the following fields:$/, dataTable => {
-    const fields = dataTable.map(row => row.field)
-
-    fields.forEach(field => {
-      const formField = screen.getByTestId(field)
-      expect(formField).toBeInTheDocument()
-    })
-  })
-
-  Then(
-    /^The user should see the following text fields placeholder:$/,
-    dataTable => {
-      const fields = dataTable.map(row => row.field)
-      const placeholders = dataTable.map(row => row.placeholder)
-
-      fields.forEach((field, index) => {
-        const formField = screen.getByTestId(field)
-        expect(formField).toHaveAttribute('placeholder', placeholders[index])
-      })
-    }
-  )
-
-  Then(
-    /^The user should see the following select fields placeholder:$/,
-    dataTable => {
-      const fields = dataTable.map(row => row.field)
-      const placeholders = dataTable.map(row => row.placeholder)
-
-      fields.forEach((field, index) => {
-        const formField = screen.getByTestId(field)
-        const formPlaceholder = formField.querySelectorAll('option')[0]
-        expect(formPlaceholder).toHaveTextContent(placeholders[index])
-      })
-    }
-  )
-
-  Then(/^The user should see the "(.*)" button enabled$/, buttonName => {
-    const button = screen.getByTestId(buttonName)
-    expect(button).toBeEnabled()
+    expect(newWindow).toHaveTextContent(formData.join('\n'))
   })
 }
 
