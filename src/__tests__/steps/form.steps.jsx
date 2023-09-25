@@ -1,14 +1,12 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import Form from '../../components/Form.jsx'
 import '@testing-library/jest-dom'
-import { fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
+import Form from '../../components/Form.jsx'
 
 const formFields = ['name', 'surname', 'username', 'country', 'dni']
 
 const updateFieldValue = (field, value) => {
-  const fieldElement = screen.getByTestId(field)
-  fireEvent.change(fieldElement, {
+  fireEvent.change(screen.getByTestId(field), {
     target: { value: value }
   })
 }
@@ -19,58 +17,50 @@ export const formSteps = ({
   when: When,
   then: Then
 }) => {
+  // Given steps
   Given(/^the user opens the form$/, () => {
     render(<Form />)
   })
 
-  When(/^the user enters "(.*)" in the "(.*)" field$/, (value, field) => {
-    updateFieldValue(field, value)
+  // When steps
+  When(/^the user types "(.*)" into the "(.*)" field$/, updateFieldValue)
+  When(/^the user focuses on the "(.*)" field$/, field => {
+    fireEvent.focus(screen.getByTestId(field))
   })
-
-  When(/^the user enters in the "(.*)" field$/, field => {
-    const fieldElement = screen.getByTestId(field)
-    fireEvent.focus(fieldElement)
-  })
-
-  When(
-    /^the user selects "(.*)" from the "(.*)" dropdown$/,
-    (field, option) => {
-      updateFieldValue(field, option)
-    }
-  )
-
   When(/^the user enters the following data$/, dataTable => {
     dataTable.forEach(row => {
       updateFieldValue(row.field, row.value)
     })
   })
+  When(/^the user clicks the "(.*)" button$/, buttonName => {
+    fireEvent.click(screen.getByTestId(buttonName))
+  })
+  When(/^the user selects "(.*)" from the "(.*)" dropdown$/, updateFieldValue)
 
+  // And steps
   And(/^the user leaves the "(.*)" field empty$/, field => {
     updateFieldValue(field, '')
     fireEvent.blur(screen.getByTestId(field))
   })
-
   And(/^the user leaves the "(.*)" field$/, field => {
     fireEvent.blur(screen.getByTestId(field))
   })
 
-  And(/^the user clicks the "(.*)" button$/, buttonName => {
-    fireEvent.click(screen.getByTestId(buttonName))
-  })
-
-  Then(/^the field "(.*)" should be "(.*)"$/, (field, isValid) => {
-    const fieldElement = screen.getByTestId(field)
-    expect(fieldElement).toHaveClass(isValid)
-  })
-
+  // Then steps
   Then(
-    /^the user should see the following input error message:"([^"]*)"$/,
-    errorMessage => {
-      const messageElement = screen.getByText(errorMessage)
-      expect(messageElement).toBeInTheDocument()
+    /^the "(.*)" field should show as "(.*)"$/,
+    (field, validationResult) => {
+      expect(screen.getByTestId(field)).toHaveClass(validationResult)
     }
   )
-
+  Then(
+    /^the user should see the following "(.*)" error message:"([^"]*)"$/,
+    (field, errorMessage) => {
+      expect(screen.getByTestId(`${field}-error`)).toHaveTextContent(
+        errorMessage
+      )
+    }
+  )
   Then(/^the "(.*)" button should be "(.*)"$/, (buttonName, buttonState) => {
     const button = screen.getByTestId(buttonName)
     if (buttonState === 'enabled') {
@@ -79,19 +69,15 @@ export const formSteps = ({
       expect(button).toBeDisabled()
     }
   })
-
   Then(/^the form data should be empty$/, () => {
     formFields.forEach(field => {
-      const fieldElement = screen.getByTestId(field)
-      expect(fieldElement).toHaveValue('')
+      expect(screen.getByTestId(field)).toHaveValue('')
     })
   })
-
   Then(/^the user should see a new window containing the form data$/, () => {
     const newWindow = screen.getByTestId('form-data')
     const formData = formFields.map(field => {
-      const fieldElement = screen.getByTestId(field)
-      return `${field}: ${fieldElement.value}`
+      return `${field}: ${screen.getByTestId(field).value}`
     })
     expect(newWindow).toHaveTextContent(formData.join('\n'))
   })

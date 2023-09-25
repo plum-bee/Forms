@@ -1,40 +1,37 @@
 Feature: Form Submission
     As a user:
-    - I want to fill the form with my personal data and submit it
-    - I want to see a window with my submitted data after submitting the form
+    - I want to fill out the form with my personal data and submit it
+    - I want to see a window displaying my submitted data after I submit the form
 
-    How to identify a valid field:
-    - Field border color is color green
+    Valid Field:
+    - Border color turns green.
 
-    How to identify an invalid field:
-    - Field border color is color red
-    - An error message is displayed below the field containing the error description
+    Invalid Field:
+    - Border color turns red.
+    - An error message displays below the field describing the error.
 
-    How to enter a field:
-    - Click on the field
-    - Tabbing to the field
-    - By default, the first field is selected
+    Focus on a field:
+    - Refers to the action of clicking on a field or tabbing into it
 
-    How to leave a field:
-    - Click away from the field
-    - Click on another field
-    - Tabbing to another field
+    Leave a field:
+    - Refers to clicking away from the field, clicking on another field or tabbing to another field.
+
 
     Background:
         Given the user opens the form
 
-    Scenario Outline: Validate name field contains only uppercase letters
-        When the user enters "<name>" into the "name" field
-        Then the field "name" should be "<validation_result>"
+    Scenario Outline: Validate that name field contains only uppercase letters
+        When the user types "<name>" into the "name" field
+        Then the "name" field should show as "<validation_result>"
         Examples:
             | name | validation_result |
             | JOHN | valid             |
             | john | invalid           |
             | John | invalid           |
 
-    Scenario Outline: Validate surname field contains only uppercase letters
-        When the user enters "<surname>" into the "surname" field
-        Then the field "surname" should be "<validation_result>"
+    Scenario Outline: Validate that surname field contains only uppercase letters
+        When the user types "<surname>" into the "surname" field
+        Then the "surname" field should show as "<validation_result>"
         Examples:
             | surname | validation_result |
             | DOE     | valid             |
@@ -42,18 +39,18 @@ Feature: Form Submission
             | Doe     | invalid           |
 
     Scenario Outline: Validate username field contains only uppercase letters
-        When the user enters "<username>" into the "username" field
-        Then the field "username" should be "<validation_result>"
+        When the user types "<username>" into the "username" field
+        Then the field "username" should show as "<validation_result>"
         Examples:
             | username | validation_result |
             | MIDUDEV  | valid             |
             | midudev  | invalid           |
             | Midudev  | invalid           |
 
-    Scenario Outline: Validate username field does not contain user's name
-        When the users enters "<name>" as "name"
-        And the user enters "<username>" into the "username" field
-        Then the field "username" should be "<validation_result>"
+    Scenario Outline: Validate that username field does not contain user's name
+        When the users types "<name>" into the "name" field
+        And the user types "<username>" into the "username" field
+        Then the field "username" should show as "<validation_result>"
         Examples:
             | name       | username | validation_result |
             | JOHN       | JOHN     | invalid           |
@@ -62,27 +59,28 @@ Feature: Form Submission
             | JULIO JOSE | JULIO    | invalid           |
             | JULIO JOSE | JOSE     | invalid           |
 
-    Scenario Outline: Validate username field does not contain more than 10 characters
-        When the user enters "<username>" into the "username" field
-        Then the field "username" should be "<validation_result>"
+    Scenario Outline: Validate that username field does not contain more than 10 characters
+        When the user types "<username>" into the "username" field
+        Then the field "username" should show as "<validation_result>"
         Examples:
             | username    | validation_result |
             | MIDUDEV     | valid             |
             | MIDUDEV123  | valid             |
             | MIDUDEV1234 | invalid           |
 
-    Scenario Outline: Validate the selected country is not the default option
+    Scenario Outline: Validate that the selected country is not the default option
         When the user selects "<country>" from the "country" dropdown
-        Then the field "country" should be "<validation_result>"
+        Then the field "country" should show as "<validation_result>"
         Examples:
-            | country   | validation_result |
-            | Spain     | valid             |
-            | Argentina | valid             |
+            | country             | validation_result |
+            | SPAIN               | valid             |
+            | ARGENTINA           | valid             |
+            | SELECT YOUR COUNTRY | invalid           |
 
-    Scenario Outline: Display error message when the user leaves a field empty
-        When the user enters in the '<field>' field
-        And the user leaves the field empty
-        Then the user should see the following input error message: "<error_message>"
+    Scenario Outline: Display an error message when a field is left empty
+        When the user focuses on the '<field>' field
+        And the user leaves the '<field>' empty
+        Then the user should see the following '<field>' error message: "<error_message>"
         Examples:
             | field    | error_message              |
             | name     | name field is required     |
@@ -92,9 +90,9 @@ Feature: Form Submission
             | dni      | dni field is required      |
 
     Scenario Outline: Display error message when the user leaves a field in lowercase
-        When the user enters "<value>" into the "<field>" field
+        When the user focuses "<value>" into the "<field>" field
         And the user leaves the "<field>" field
-        Then the user should see the following input error message: "<error_message>"
+        Then the user should see the following '<field>' error message: "<error_message>"
         Examples:
             | field    | value    | error_message                   |
             | name     | john     | name must be in uppercase       |
@@ -103,26 +101,26 @@ Feature: Form Submission
             | dni      | 12345678 | dni letter must be in uppercase |
 
     Scenario Outline: Display error message when the username contains the user's name
-        When the user enters "<name>" into the "name" field
-        And the user enters "<username>" into the "username" field
-        Then the user should see the following input error message: "<error_message>"
+        When the user types "<name>" into the "name" field
+        And the user types "<username>" into the "username" field
+        Then the user should see the following '<field>' error message: "<error_message>"
         Examples:
             | name | username | error_message                |
             | JOHN | JOHN     | username cannot contain name |
             | JOHN | MIDUJOHN | username cannot contain name |
             | JOHN | JOHN123  | username cannot contain name |
 
-    Scenario Outline: Display error message when the user enters a username with more than 10 characters
-        When the user enters "<username>" into the "username" field
-        Then the user should see the following input error message: "<error_message>"
+    Scenario Outline: Display error message when the user types a username with more than 10 characters
+        When the user types "<username>" into the "username" field
+        Then the user should see the following '<field>' error message: "<error_message>"
         Examples:
             | username    | error_message                           |
             | MIDUDEV1234 | username cannot have more than 10 chars |
 
-    Scenario Outline: Display error message when the user enters an invalid DNI
+    Scenario Outline: Display error message when the user types an invalid DNI
         When the user selects "<country>" from the "country" dropdown
-        And the user enters "<dni>" into the "dni" field
-        Then the user should see the following input error message: "<error_message>"
+        And the user types "<dni>" into the "dni" field
+        Then the user should see the following '<field>' error message: "<error_message>"
         Examples:
             | country   | dni        | error_message    |
             | Spain     | 12345687Z  | DNI is not valid |
@@ -147,7 +145,7 @@ Feature: Form Submission
         Then the "clear" button should be "enabled"
 
     Scenario: Clear button clears all the form data
-        And the user enters the following data
+        And the user types the following data
             | field    | value     |
             | name     | JOHN      |
             | surname  | DOE       |
@@ -155,10 +153,10 @@ Feature: Form Submission
             | username | MIDUDEV   |
             | dni      | 12345678Z |
         When the user clicks the "clear" button
-        Then the form data should be empty
+        Then the form data should show as empty
 
     Scenario: Submit button opens a new window containing all the data submited
-        And the user enters the following data
+        And the user types the following data
             | field    | value     |
             | name     | JOHN      |
             | surname  | DOE       |
