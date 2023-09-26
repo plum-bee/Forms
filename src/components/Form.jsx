@@ -10,18 +10,31 @@ function Form () {
     country: '',
     dni: ''
   }
-
   const validate = formData => {
-    const errors = {}
-
+    const errors = {};
+  
     for (let fieldId in formData) {
-      if (formData[fieldId] !== formData[fieldId].toUpperCase()) {
-        errors[fieldId] = `${fieldId} must be in uppercase`
+    
+      if (formData[fieldId].trim() === '') {
+        errors[fieldId] = `${fieldId} field is required `;
+      } else if (formData[fieldId] !== formData[fieldId].toUpperCase()) {
+        errors[fieldId] = `${fieldId} must be in uppercase `;
       }
     }
+  
+    if (formData.username.includes(formData.name) && formData.name !== '') {
+      errors.username = 'username cannot contain name';
+    }
+  
+    if (formData.username.length > 10) {
+      errors.username = 'username cannot have more than 10 chars';
+    }
+  
+    return errors;
+  };
+  
+  
 
-    return errors
-  }
 
   const { formData, formErrors, handleChange, handleBlur } = useForm(
     initialData,
