@@ -2,7 +2,7 @@ import React from 'react'
 import useForm from '../hooks/useForm'
 import InputField from './InputField'
 
-function Form () {
+function Form() {
   const initialData = {
     name: '',
     surname: '',
@@ -14,11 +14,14 @@ function Form () {
   const validate = formData => {
     const errors = {}
 
-    if (formData.name && formData.name !== formData.name.toUpperCase()) {
-      errors.name = 'name must be in uppercase '
+    
+    for (let fieldId in formData) {
+      if (formData[fieldId] !== formData[fieldId].toUpperCase()) {
+        errors[fieldId] = `${fieldId} must be in uppercase`;
+      }
     }
 
-    return errors
+    return errors;
   }
 
   const { formData, formErrors, handleChange, handleBlur } = useForm(
@@ -37,6 +40,37 @@ function Form () {
         handleChange={handleChange}
         handleBlur={handleBlur}
         error={formErrors.name}
+      />
+      <InputField
+        label='Surname'
+        id='surname'
+        name='surname'
+        placeholder='Enter your surname'
+        value={formData.surname}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        error={formErrors.surname}
+      />
+      <InputField
+        label='Username'
+        id='username'
+        name='username'
+        placeholder='Enter your username'
+        value={formData.username}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        error={formErrors.username}
+      />
+     
+      <InputField
+        label='DNI'
+        id='dni'
+        name='dni'
+        placeholder='Enter your DNI'
+        value={formData.dni}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        error={formErrors.dni}
       />
     </form>
   )

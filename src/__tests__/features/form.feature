@@ -19,7 +19,6 @@ Feature: Form Submission
 
     Background:
         Given the user opens the form
-
     Scenario Outline: Validate that name field contains only uppercase letters
         When the user types "<name>" into the "name" field
         Then the "name" field should show as "<validation_result>"
@@ -88,7 +87,7 @@ Feature: Form Submission
             | username | username field is required |
             | country  | country field is required  |
             | dni      | dni field is required      |
-
+@single
     Scenario Outline: Display error message when the user leaves a field in lowercase
         When the user types "<value>" into the "<field>" field
         And the user leaves the "<field>" field
@@ -98,7 +97,7 @@ Feature: Form Submission
             | name     | john     | name must be in uppercase       |
             | surname  | doe      | surname must be in uppercase    |
             | username | midudev  | username must be in uppercase   |
-            | dni      | 12345678 | dni letter must be in uppercase |
+            | dni      | 12345678 | dni must be in uppercase        |
 
 
     Scenario Outline: Display error message when the username contains the user's name
