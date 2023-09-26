@@ -20,8 +20,9 @@ function InputField ({
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
+        data-testid={id}
       />
-      {error && <div>{error}</div>}
+      {error && <div data-testid={`${id}-error`}>{error}</div>}
     </label>
   )
 }
