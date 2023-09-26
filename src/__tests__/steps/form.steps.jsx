@@ -23,27 +23,42 @@ export const formSteps = ({
   })
 
   // When steps
-  When(/^the user types "(.*)" into the "(.*)" field$/, updateFieldValue)
+  When(/^the user types "(.*)" into the "(.*)" field$/, (value, field) => {
+    updateFieldValue(field, value)
+  })
+
   When(/^the user focuses on the "(.*)" field$/, field => {
     fireEvent.focus(screen.getByTestId(field))
   })
+
   When(/^the user enters the following data$/, dataTable => {
     dataTable.forEach(row => {
       updateFieldValue(row.field, row.value)
     })
   })
+
   When(/^the user clicks the "(.*)" button$/, buttonName => {
     fireEvent.click(screen.getByTestId(buttonName))
   })
-  When(/^the user selects "(.*)" from the "(.*)" dropdown$/, updateFieldValue)
+
+  When(/^the user selects "(.*)" from the "(.*)" dropdown$/, (field, value) => {
+    updateFieldValue(field, value)
+  })
 
   // And steps
   And(/^the user leaves the "(.*)" field empty$/, field => {
     updateFieldValue(field, '')
     fireEvent.blur(screen.getByTestId(field))
   })
+
   And(/^the user leaves the "(.*)" field$/, field => {
     fireEvent.blur(screen.getByTestId(field))
+  })
+
+  And(/^the user types the following data$/, dataTable => {
+    dataTable.forEach(row => {
+      updateFieldValue(row.field, row.value)
+    })
   })
 
   // Then steps
@@ -53,14 +68,16 @@ export const formSteps = ({
       expect(screen.getByTestId(field)).toHaveClass(validationResult)
     }
   )
+
   Then(
-    /^the user should see the following "(.*)" error message:"([^"]*)"$/,
+    /^the user should see the following "(.*)" error message: "(.*)"$/,
     (field, errorMessage) => {
       expect(screen.getByTestId(`${field}-error`)).toHaveTextContent(
         errorMessage
       )
     }
   )
+
   Then(/^the "(.*)" button should be "(.*)"$/, (buttonName, buttonState) => {
     const button = screen.getByTestId(buttonName)
     if (buttonState === 'enabled') {
@@ -69,11 +86,13 @@ export const formSteps = ({
       expect(button).toBeDisabled()
     }
   })
-  Then(/^the form data should be empty$/, () => {
+
+  Then(/^the form data should show as empty$/, () => {
     formFields.forEach(field => {
       expect(screen.getByTestId(field)).toHaveValue('')
     })
   })
+
   Then(/^the user should see a new window containing the form data$/, () => {
     const newWindow = screen.getByTestId('form-data')
     const formData = formFields.map(field => {

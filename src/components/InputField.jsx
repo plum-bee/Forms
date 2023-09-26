@@ -21,6 +21,7 @@ function InputField ({
         onChange={handleChange}
         onBlur={handleBlur}
         data-testid={id}
+        className={error ? 'invalid' : 'valid'}
       />
       {error && <div data-testid={`${id}-error`}>{error}</div>}
     </label>

@@ -37,6 +37,7 @@ function useForm (initialData, validate) {
     formData,
     formErrors,
     handleChange,
+    handleBlur,
     handleSubmit,
     handleClear
   }

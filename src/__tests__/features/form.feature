@@ -40,7 +40,7 @@ Feature: Form Submission
 
     Scenario Outline: Validate username field contains only uppercase letters
         When the user types "<username>" into the "username" field
-        Then the field "username" should show as "<validation_result>"
+        Then the "username" field should show as "<validation_result>"
         Examples:
             | username | validation_result |
             | MIDUDEV  | valid             |
@@ -48,9 +48,9 @@ Feature: Form Submission
             | Midudev  | invalid           |
 
     Scenario Outline: Validate that username field does not contain user's name
-        When the users types "<name>" into the "name" field
+        When the user types "<name>" into the "name" field
         And the user types "<username>" into the "username" field
-        Then the field "username" should show as "<validation_result>"
+        Then the "username" field should show as "<validation_result>"
         Examples:
             | name       | username | validation_result |
             | JOHN       | JOHN     | invalid           |
@@ -61,7 +61,7 @@ Feature: Form Submission
 
     Scenario Outline: Validate that username field does not contain more than 10 characters
         When the user types "<username>" into the "username" field
-        Then the field "username" should show as "<validation_result>"
+        Then the "username" field should show as "<validation_result>"
         Examples:
             | username    | validation_result |
             | MIDUDEV     | valid             |
@@ -70,7 +70,7 @@ Feature: Form Submission
 
     Scenario Outline: Validate that the selected country is not the default option
         When the user selects "<country>" from the "country" dropdown
-        Then the field "country" should show as "<validation_result>"
+        Then the "country" field should show as "<validation_result>"
         Examples:
             | country             | validation_result |
             | SPAIN               | valid             |
@@ -78,9 +78,9 @@ Feature: Form Submission
             | SELECT YOUR COUNTRY | invalid           |
 
     Scenario Outline: Display an error message when a field is left empty
-        When the user focuses on the '<field>' field
-        And the user leaves the '<field>' empty
-        Then the user should see the following '<field>' error message: "<error_message>"
+        When the user focuses on the "<field>" field
+        And the user leaves the "<field>" field empty
+        Then the user should see the following "<field>" error message: "<error_message>"
         Examples:
             | field    | error_message              |
             | name     | name field is required     |
@@ -90,9 +90,9 @@ Feature: Form Submission
             | dni      | dni field is required      |
 
     Scenario Outline: Display error message when the user leaves a field in lowercase
-        When the user focuses "<value>" into the "<field>" field
+        When the user types "<value>" into the "<field>" field
         And the user leaves the "<field>" field
-        Then the user should see the following '<field>' error message: "<error_message>"
+        Then the user should see the following "<field>" error message: "<error_message>"
         Examples:
             | field    | value    | error_message                   |
             | name     | john     | name must be in uppercase       |
@@ -100,10 +100,11 @@ Feature: Form Submission
             | username | midudev  | username must be in uppercase   |
             | dni      | 12345678 | dni letter must be in uppercase |
 
+
     Scenario Outline: Display error message when the username contains the user's name
         When the user types "<name>" into the "name" field
         And the user types "<username>" into the "username" field
-        Then the user should see the following '<field>' error message: "<error_message>"
+        Then the user should see the following "<field>" error message: "<error_message>"
         Examples:
             | name | username | error_message                |
             | JOHN | JOHN     | username cannot contain name |
@@ -112,7 +113,7 @@ Feature: Form Submission
 
     Scenario Outline: Display error message when the user types a username with more than 10 characters
         When the user types "<username>" into the "username" field
-        Then the user should see the following '<field>' error message: "<error_message>"
+        Then the user should see the following "<field>" error message: "<error_message>"
         Examples:
             | username    | error_message                           |
             | MIDUDEV1234 | username cannot have more than 10 chars |
@@ -120,7 +121,7 @@ Feature: Form Submission
     Scenario Outline: Display error message when the user types an invalid DNI
         When the user selects "<country>" from the "country" dropdown
         And the user types "<dni>" into the "dni" field
-        Then the user should see the following '<field>' error message: "<error_message>"
+        Then the user should see the following "<field>" error message: "<error_message>"
         Examples:
             | country   | dni        | error_message    |
             | Spain     | 12345687Z  | DNI is not valid |
