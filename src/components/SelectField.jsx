@@ -1,28 +1,45 @@
 import React from 'react'
 
-function InputField ({
+function SelectField ({
   label,
   id,
   name,
   placeholder,
   value,
+  options,
   handleChange,
   handleBlur,
   error
 }) {
+  const getClassName = (value, error) => {
+    if (value === '') return ''
+    return error ? 'invalid' : 'valid'
+  }
+
   return (
-    <label htmlFor={id}>
-      {label}:
-      <input
-        id={id}
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        data-testid={id}
-      />
+    <div>
+      <label htmlFor={id}>
+        {label}:
+        <select
+          id={id}
+          name={name}
+          value={value}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={getClassName(value, error)}
+          data-testid={id}
+        >
+          <option value=''>{placeholder}</option>
+          {options.map(option => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </label>
       {error && <div data-testid={`${id}-error`}>{error}</div>}
-    </label>
+    </div>
   )
 }
+
+export default SelectField

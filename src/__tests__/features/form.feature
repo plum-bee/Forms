@@ -53,7 +53,6 @@ Feature: Form Submission
             | midudev  | invalid           |
             | Midudev  | invalid           |
 
-    @single
     Scenario Outline: Validate that username field does not contain user's name
         When the user types "<name>" into the "name" field
         And the user types "<username>" into the "username" field
@@ -86,6 +85,7 @@ Feature: Form Submission
             | ARGENTINA           | valid             |
             | SELECT YOUR COUNTRY | invalid           |
 
+    @single
     Scenario Outline: Display an error message when a field is left empty
         When the user focuses on the "<field>" field
         And the user leaves the "<field>" field empty
