@@ -2,7 +2,7 @@ import React from 'react'
 import useForm from '../hooks/useForm'
 import InputField from './InputField'
 
-function Form() {
+function Form () {
   const initialData = {
     name: '',
     surname: '',
@@ -14,14 +14,13 @@ function Form() {
   const validate = formData => {
     const errors = {}
 
-    
     for (let fieldId in formData) {
       if (formData[fieldId] !== formData[fieldId].toUpperCase()) {
-        errors[fieldId] = `${fieldId} must be in uppercase`;
+        errors[fieldId] = `${fieldId} must be in uppercase`
       }
     }
 
-    return errors;
+    return errors
   }
 
   const { formData, formErrors, handleChange, handleBlur } = useForm(
@@ -41,6 +40,7 @@ function Form() {
         handleBlur={handleBlur}
         error={formErrors.name}
       />
+
       <InputField
         label='Surname'
         id='surname'
@@ -51,6 +51,7 @@ function Form() {
         handleBlur={handleBlur}
         error={formErrors.surname}
       />
+
       <InputField
         label='Username'
         id='username'
@@ -61,7 +62,7 @@ function Form() {
         handleBlur={handleBlur}
         error={formErrors.username}
       />
-     
+
       <InputField
         label='DNI'
         id='dni'

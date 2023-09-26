@@ -19,8 +19,10 @@ Feature: Form Submission
 
     Background:
         Given the user opens the form
+
     Scenario Outline: Validate that name field contains only uppercase letters
         When the user types "<name>" into the "name" field
+        And the user leaves the "name" field
         Then the "name" field should show as "<validation_result>"
         Examples:
             | name | validation_result |
@@ -30,6 +32,7 @@ Feature: Form Submission
 
     Scenario Outline: Validate that surname field contains only uppercase letters
         When the user types "<surname>" into the "surname" field
+        And the user leaves the "surname" field
         Then the "surname" field should show as "<validation_result>"
         Examples:
             | surname | validation_result |
@@ -39,6 +42,7 @@ Feature: Form Submission
 
     Scenario Outline: Validate username field contains only uppercase letters
         When the user types "<username>" into the "username" field
+        And the user leaves the "username" field
         Then the "username" field should show as "<validation_result>"
         Examples:
             | username | validation_result |
@@ -87,17 +91,17 @@ Feature: Form Submission
             | username | username field is required |
             | country  | country field is required  |
             | dni      | dni field is required      |
-@single
+
     Scenario Outline: Display error message when the user leaves a field in lowercase
         When the user types "<value>" into the "<field>" field
         And the user leaves the "<field>" field
         Then the user should see the following "<field>" error message: "<error_message>"
         Examples:
-            | field    | value    | error_message                   |
-            | name     | john     | name must be in uppercase       |
-            | surname  | doe      | surname must be in uppercase    |
-            | username | midudev  | username must be in uppercase   |
-            | dni      | 12345678 | dni must be in uppercase        |
+            | field    | value    | error_message                 |
+            | name     | john     | name must be in uppercase     |
+            | surname  | doe      | surname must be in uppercase  |
+            | username | midudev  | username must be in uppercase |
+            | dni      | 12345678 | dni must be in uppercase      |
 
 
     Scenario Outline: Display error message when the username contains the user's name

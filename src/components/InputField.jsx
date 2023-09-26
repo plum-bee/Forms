@@ -10,6 +10,11 @@ function InputField ({
   handleBlur,
   error
 }) {
+  const getClassName = (value, error) => {
+    if (!value) return ''
+    return error ? 'invalid' : 'valid'
+  }
+
   return (
     <label htmlFor={id}>
       {label}:
@@ -21,7 +26,7 @@ function InputField ({
         onChange={handleChange}
         onBlur={handleBlur}
         data-testid={id}
-        className={error ? 'invalid' : 'valid'}
+        className={getClassName(value, error)}
       />
       {error && <div data-testid={`${id}-error`}>{error}</div>}
     </label>
