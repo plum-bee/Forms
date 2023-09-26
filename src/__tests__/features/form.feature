@@ -16,6 +16,9 @@ Feature: Form Submission
     Leave a field:
     - Refers to clicking away from the field, clicking on another field or tabbing to another field.
 
+    Field validation:
+    - The validation process begins when the user leaves a field.
+
 
     Background:
         Given the user opens the form
@@ -50,12 +53,15 @@ Feature: Form Submission
             | midudev  | invalid           |
             | Midudev  | invalid           |
 
+    @single
     Scenario Outline: Validate that username field does not contain user's name
         When the user types "<name>" into the "name" field
         And the user types "<username>" into the "username" field
+        And the user leaves the "username" field
         Then the "username" field should show as "<validation_result>"
         Examples:
             | name       | username | validation_result |
+            | JOHN       | MIDUDEV  | valid             |
             | JOHN       | JOHN     | invalid           |
             | JOHN       | MIDUJOHN | invalid           |
             | JOHN       | JOHN123  | invalid           |
