@@ -13,9 +13,14 @@ function Form () {
 
   const validate = formData => {
     const errors = {}
-
-    return errors
+  
+    if (formData.name && formData.name !== formData.name.toUpperCase()) {
+      errors.name = 'Name must be in UPPERCASE';
+    }
+  
+    return errors;
   }
+  
 
   const { formData, formErrors, handleChange, handleBlur } = useForm(
     initialData,
