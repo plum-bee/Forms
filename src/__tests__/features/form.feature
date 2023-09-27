@@ -99,6 +99,7 @@ Feature: Form Submission
             | country  | country field is required  |
             | dni      | dni field is required      |
 
+    @single
     Scenario Outline: Display error message when the user leaves a field in lowercase
         When the user types "<value>" into the "<field>" field
         And the user leaves the "<field>" field
@@ -138,10 +139,21 @@ Feature: Form Submission
         Then the user should see the following "dni" error message: "<error_message>"
         Examples:
             | country   | dni        | error_message           |
-            | Spain     | 12345687Z  | Invalid Spanish DNI     |
-            | Spain     | 87354321X  | Invalid Spanish DNI     |
-            | Argentina | 9999999999 | Invalid Argentinian DNI |
-            | Argentina | 1234567890 | Invalid Argentinian DNI |
+            | SPAIN     | 12345687Z  | Invalid Spanish DNI     |
+            | SPAIN     | 87354321X  | Invalid Spanish DNI     |
+            | ARGENTINA | 9999999999 | Invalid Argentinian DNI |
+            | ARGENTINA | 1234567890 | Invalid Argentinian DNI |
+
+    Scenario Outline: Display error message when the user types DNI without country selected
+        When the user types "<dni>" into the "dni" field
+        And the user leaves the "dni" field
+        Then the user should see the following "dni" error message: "<error_message>"
+        Examples:
+            | dni        | error_message                 |
+            | 12345687Z  | Country selection is required |
+            | 87354321X  | Country selection is required |
+            | 9999999999 | Country selection is required |
+            | 1234567890 | Country selection is required |
 
     Scenario: Submit button is disabled by default
         Then the "submit" button should be "disabled"
