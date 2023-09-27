@@ -49,8 +49,9 @@ function Form () {
       errors.username = 'username cannot have more than 10 chars'
     }
 
-    // Validación del DNI
-    if (formData.country === '') {
+    if (formData.dni !== formData.dni.toUpperCase()) {
+      errors.dni = 'dni must be in uppercase'
+    } else if (formData.country === '') {
       if (formData.dni.trim() !== '') {
         errors.dni = 'Country selection is required'
       }
