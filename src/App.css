@@ -53,6 +53,7 @@ select {
 .valid {
   border-color: #6bff6b;
 }
+
 .invalid {
   border-color: #ff6b6b;
 }

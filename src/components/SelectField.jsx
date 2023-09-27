@@ -12,7 +12,7 @@ function SelectField ({
   error
 }) {
   const getClassName = (value, error) => {
-    if (value === '') return ''
+    if (!value && !error) return ''
     return error ? 'invalid' : 'valid'
   }
 
@@ -29,9 +29,11 @@ function SelectField ({
           className={getClassName(value, error)}
           data-testid={id}
         >
-          <option value=''>{placeholder}</option>
+          <option value='' data-testid={placeholder}>
+            {placeholder}
+          </option>
           {options.map(option => (
-            <option key={option} value={option}>
+            <option key={option} value={option} data-testid={option}>
               {option}
             </option>
           ))}

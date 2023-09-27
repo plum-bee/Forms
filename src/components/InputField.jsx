@@ -11,7 +11,7 @@ function InputField ({
   error
 }) {
   const getClassName = (value, error) => {
-    if (!value) return ''
+    if (!value && !error) return ''
     return error ? 'invalid' : 'valid'
   }
 
