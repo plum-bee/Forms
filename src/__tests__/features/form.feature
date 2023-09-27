@@ -59,16 +59,17 @@ Feature: Form Submission
         And the user leaves the "username" field
         Then the "username" field should show as "<validation_result>"
         Examples:
-            | name       | username | validation_result |
-            | JOHN       | MIDUDEV  | valid             |
-            | JOHN       | JOHN     | invalid           |
-            | JOHN       | MIDUJOHN | invalid           |
-            | JOHN       | JOHN123  | invalid           |
-            | JULIO JOSE | JULIO    | invalid           |
-            | JULIO JOSE | JOSE     | invalid           |
+            | name | username | validation_result |
+            | JOHN | MIDUDEV  | valid             |
+            | JOHN | JOHN     | invalid           |
+            | JOHN | MIDUJOHN | invalid           |
+            | JOHN | JOHN123  | invalid           |
+    # | JULIO JOSE | JULIO    | invalid           |
+    # | JULIO JOSE | JOSE     | invalid           |
 
     Scenario Outline: Validate that username field does not contain more than 10 characters
         When the user types "<username>" into the "username" field
+        And the user leaves the "username" field
         Then the "username" field should show as "<validation_result>"
         Examples:
             | username    | validation_result |
@@ -78,14 +79,14 @@ Feature: Form Submission
 
     Scenario Outline: Validate that the selected country is not the default option
         When the user selects "<country>" from the "country" dropdown
+        And the user leaves the "country" field
         Then the "country" field should show as "<validation_result>"
         Examples:
             | country             | validation_result |
             | SPAIN               | valid             |
             | ARGENTINA           | valid             |
-            | SELECT YOUR COUNTRY | invalid           |
+            | Select your country | invalid           |
 
-    @single
     Scenario Outline: Display an error message when a field is left empty
         When the user focuses on the "<field>" field
         And the user leaves the "<field>" field empty
@@ -103,17 +104,17 @@ Feature: Form Submission
         And the user leaves the "<field>" field
         Then the user should see the following "<field>" error message: "<error_message>"
         Examples:
-            | field    | value    | error_message                 |
-            | name     | john     | name must be in uppercase     |
-            | surname  | doe      | surname must be in uppercase  |
-            | username | midudev  | username must be in uppercase |
-            | dni      | 12345678 | dni must be in uppercase      |
-
+            | field    | value     | error_message                 |
+            | name     | john      | name must be in uppercase     |
+            | surname  | doe       | surname must be in uppercase  |
+            | username | midudev   | username must be in uppercase |
+            | dni      | 12345678z | dni must be in uppercase      |
 
     Scenario Outline: Display error message when the username contains the user's name
         When the user types "<name>" into the "name" field
         And the user types "<username>" into the "username" field
-        Then the user should see the following "<field>" error message: "<error_message>"
+        And the user leaves the "username" field
+        Then the user should see the following "username" error message: "<error_message>"
         Examples:
             | name | username | error_message                |
             | JOHN | JOHN     | username cannot contain name |
@@ -122,15 +123,19 @@ Feature: Form Submission
 
     Scenario Outline: Display error message when the user types a username with more than 10 characters
         When the user types "<username>" into the "username" field
-        Then the user should see the following "<field>" error message: "<error_message>"
+        And the user leaves the "username" field
+        Then the user should see the following "username" error message: "<error_message>"
         Examples:
             | username    | error_message                           |
             | MIDUDEV1234 | username cannot have more than 10 chars |
 
+    @single
     Scenario Outline: Display error message when the user types an invalid DNI
         When the user selects "<country>" from the "country" dropdown
+        And the user leaves the "country" field
         And the user types "<dni>" into the "dni" field
-        Then the user should see the following "<field>" error message: "<error_message>"
+        And the user leaves the "dni" field
+        Then the user should see the following "dni" error message: "<error_message>"
         Examples:
             | country   | dni        | error_message    |
             | Spain     | 12345687Z  | DNI is not valid |

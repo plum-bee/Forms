@@ -41,7 +41,7 @@ export const formSteps = ({
     fireEvent.click(screen.getByTestId(buttonName))
   })
 
-  When(/^the user selects "(.*)" from the "(.*)" dropdown$/, (field, value) => {
+  When(/^the user selects "(.*)" from the "(.*)" dropdown$/, (value, field) => {
     updateFieldValue(field, value)
   })
 
@@ -64,8 +64,8 @@ export const formSteps = ({
   // Then steps
   Then(
     /^the "(.*)" field should show as "(.*)"$/,
-    (field, validationResult) => {
-      expect(screen.getByTestId(field)).toHaveClass(validationResult)
+    async (field, validationResult) => {
+      await expect(screen.getByTestId(field)).toHaveClass(validationResult)
     }
   )
 
