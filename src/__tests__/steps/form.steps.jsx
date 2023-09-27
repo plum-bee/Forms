@@ -65,13 +65,13 @@ export const formSteps = ({
   Then(
     /^the "(.*)" field should show as "(.*)"$/,
     async (field, validationResult) => {
-      await expect(screen.getByTestId(field)).toHaveClass(validationResult)
+      expect(screen.getByTestId(field)).toHaveClass(validationResult)
     }
   )
 
   Then(
     /^the user should see the following "(.*)" error message: "(.*)"$/,
-    (field, errorMessage) => {
+    async (field, errorMessage) => {
       expect(screen.getByTestId(`${field}-error`)).toHaveTextContent(
         errorMessage
       )

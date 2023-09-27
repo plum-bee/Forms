@@ -137,11 +137,11 @@ Feature: Form Submission
         And the user leaves the "dni" field
         Then the user should see the following "dni" error message: "<error_message>"
         Examples:
-            | country   | dni        | error_message    |
-            | Spain     | 12345687Z  | DNI is not valid |
-            | Spain     | 87354321X  | DNI is not valid |
-            | Argentina | 9999999999 | DNI is not valid |
-            | Argentina | 1234567890 | DNI is not valid |
+            | country   | dni        | error_message           |
+            | Spain     | 12345687Z  | Invalid Spanish DNI     |
+            | Spain     | 87354321X  | Invalid Spanish DNI     |
+            | Argentina | 9999999999 | Invalid Argentinian DNI |
+            | Argentina | 1234567890 | Invalid Argentinian DNI |
 
     Scenario: Submit button is disabled by default
         Then the "submit" button should be "disabled"
