@@ -3,6 +3,7 @@ import useForm from '../hooks/useForm'
 import InputField from './InputField'
 import SelectField from './SelectField'
 import Button from './Button'
+import validators from '../utils/validators'
 
 function Form () {
   const initialData = {
@@ -15,62 +16,6 @@ function Form () {
 
   const availableCountries = ['SPAIN', 'ARGENTINA']
 
-  const validateDniSpain = dni => {
-    const letterArray = 'TRWAGMYFPDXBNJZSQVHLCKET'
-    const regExPattern = /^\d{8}[A-Z]$/
-
-    if (!regExPattern.test(dni)) return false
-
-    const char = dni.charAt(8)
-    const number = dni.substr(0, 8)
-    return char === letterArray.charAt(number % 23)
-  }
-
-  const validateDniArgentina = dni => {
-    const regExPattern = /^\d{8}$/
-    return regExPattern.test(dni)
-  }
-
-  const validate = formData => {
-    const errors = {}
-
-    for (let fieldId in formData) {
-      if (formData[fieldId].trim() === '') {
-        errors[fieldId] = `${fieldId} field is required `
-      } else if (formData[fieldId] !== formData[fieldId].toUpperCase()) {
-        errors[fieldId] = `${fieldId} must be in uppercase `
-      }
-    }
-
-    if (formData.username.includes(formData.name) && formData.name !== '') {
-      errors.username = 'username cannot contain name'
-    }
-
-    if (formData.username.length > 10) {
-      errors.username = 'username cannot have more than 10 chars'
-    }
-
-    if (formData.dni !== formData.dni.toUpperCase()) {
-      errors.dni = 'dni must be in uppercase'
-    } else if (formData.country === '') {
-      if (formData.dni.trim() !== '') {
-        errors.dni = 'Country selection is required'
-      }
-    } else if (
-      formData.country === 'SPAIN' &&
-      !validateDniSpain(formData.dni)
-    ) {
-      errors.dni = 'Invalid Spanish DNI'
-    } else if (
-      formData.country === 'ARGENTINA' &&
-      !validateDniArgentina(formData.dni)
-    ) {
-      errors.dni = 'Invalid Argentinian DNI'
-    }
-
-    return errors
-  }
-
   const {
     formData,
     formErrors,
@@ -78,7 +23,7 @@ function Form () {
     handleBlur,
     handleSubmit,
     handleClear
-  } = useForm(initialData, validate)
+  } = useForm(initialData, validators.validate)
 
   return (
     <form>
