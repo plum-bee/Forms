@@ -5,7 +5,7 @@ import SelectField from './SelectField'
 import Button from './Button'
 import validators from '../utils/validators'
 
-function Form () {
+function Form ({ onSubmit }) {
   const initialData = {
     name: '',
     surname: '',
@@ -16,15 +16,13 @@ function Form () {
 
   const availableCountries = ['SPAIN', 'ARGENTINA']
 
-  const {
-    formData,
-    formErrors,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    handleClear
-  } = useForm(initialData, validators.validate)
+  const { formData, formErrors, handleChange, handleBlur, handleClear } =
+    useForm(initialData, validators.validate)
 
+  const handleSubmit = event => {
+    event.preventDefault()
+    onSubmit(formData)
+  }
   return (
     <form>
       <InputField
@@ -83,7 +81,7 @@ function Form () {
         error={formErrors.dni}
       />
 
-      <Button buttonName='Submit' onClick={handleSubmit} isDisabled />
+      <Button buttonName='Submit' onClick={handleSubmit} />
 
       <Button buttonName='Clear' onClick={handleClear} />
     </form>

@@ -33,20 +33,12 @@ function useForm (initialData, validate) {
     setFormData(initialData)
   }
 
-  const handleSubmit = event => {
-    event.preventDefault()
-    const formDataString = JSON.stringify(formData, null, 2)
-    const newWindow = window.open('', '_blank')
-    newWindow.document.write(`<pre>${formDataString}</pre>`)
-  }
-
   return {
     formData,
     formErrors,
     handleChange,
     handleBlur,
-    handleClear,
-    handleSubmit
+    handleClear
   }
 }
 
