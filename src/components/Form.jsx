@@ -2,6 +2,7 @@ import React from 'react'
 import useForm from '../hooks/useForm'
 import InputField from './InputField'
 import SelectField from './SelectField'
+import Button from './Button'
 
 function Form () {
   const initialData = {
@@ -70,10 +71,14 @@ function Form () {
     return errors
   }
 
-  const { formData, formErrors, handleChange, handleBlur } = useForm(
-    initialData,
-    validate
-  )
+  const {
+    formData,
+    formErrors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    handleClear
+  } = useForm(initialData, validate)
 
   return (
     <form>
@@ -132,6 +137,10 @@ function Form () {
         handleBlur={handleBlur}
         error={formErrors.dni}
       />
+
+      <Button buttonName='Submit' onClick={handleSubmit} isDisabled />
+
+      <Button buttonName='Clear' onClick={handleClear} />
     </form>
   )
 }

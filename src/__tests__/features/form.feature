@@ -99,7 +99,6 @@ Feature: Form Submission
             | country  | country field is required  |
             | dni      | dni field is required      |
 
-    @single
     Scenario Outline: Display error message when the user leaves a field in lowercase
         When the user types "<value>" into the "<field>" field
         And the user leaves the "<field>" field
@@ -130,7 +129,6 @@ Feature: Form Submission
             | username    | error_message                           |
             | MIDUDEV1234 | username cannot have more than 10 chars |
 
-    @single
     Scenario Outline: Display error message when the user types an invalid DNI
         When the user selects "<country>" from the "country" dropdown
         And the user leaves the "country" field
