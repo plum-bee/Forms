@@ -37,7 +37,11 @@ function SelectField ({
           </option>
         ))}
       </select>
-      {error && <div data-testid={`${id}-error`}>{error}</div>}
+      {error && (
+        <div className='error' data-testid={`${id}-error`}>
+          {error}
+        </div>
+      )}
     </label>
   )
 }

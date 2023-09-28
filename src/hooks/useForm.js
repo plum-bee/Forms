@@ -9,8 +9,6 @@ function useForm (initialData, validate) {
   const handleChange = event => {
     const { name, value } = event.target
     setFormData(prevData => ({ ...prevData, [name]: value }))
-
-    // Después de actualizar formData, valida ambos campos "name" y "username"
     const errors = validate({ ...formData, [name]: value })
     setFormErrors(errors)
   }
