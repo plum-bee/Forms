@@ -1,41 +1,41 @@
-import React from 'react';
-import { useState } from 'react';
+import React from 'react'
+import { useState } from 'react'
 
-function useForm(initialData, validate) {
-  const [formData, setFormData] = useState(initialData);
-  const [formErrors, setFormErrors] = useState({});
+function useForm (initialData, validate) {
+  const [formData, setFormData] = useState(initialData)
+  const [formErrors, setFormErrors] = useState({})
 
   const handleChange = event => {
-    const { name, value } = event.target;
-    setFormData(prevData => ({ ...prevData, [name]: value }));
-    
+    const { name, value } = event.target
+    setFormData(prevData => ({ ...prevData, [name]: value }))
+
     // Después de actualizar formData, valida ambos campos "name" y "username"
-    const errors = validate({ ...formData, [name]: value });
-    setFormErrors(errors);
-  };
+    const errors = validate({ ...formData, [name]: value })
+    setFormErrors(errors)
+  }
 
   const handleBlur = event => {
-    const { name } = event.target;
+    const { name } = event.target
 
-    const errors = validate(formData);
+    const errors = validate(formData)
     if (errors[name]) {
-      setFormErrors(prevErrors => ({ ...prevErrors, [name]: errors[name] }));
+      setFormErrors(prevErrors => ({ ...prevErrors, [name]: errors[name] }))
     } else {
       setFormErrors(prevErrors => {
-        const updatedErrors = { ...prevErrors };
-        delete updatedErrors[name];
-        return updatedErrors;
-      });
+        const updatedErrors = { ...prevErrors }
+        delete updatedErrors[name]
+        return updatedErrors
+      })
     }
-  };
+  }
 
   const handleSubmit = callback => {
-    console.log('handleSubmit');
-  };
+    console.log('handleSubmit')
+  }
 
   const handleClear = () => {
-    setFormData(initialData);
-  };
+    setFormData(initialData)
+  }
 
   return {
     formData,
@@ -44,7 +44,7 @@ function useForm(initialData, validate) {
     handleBlur,
     handleSubmit,
     handleClear
-  };
+  }
 }
 
-export default useForm;
+export default useForm
