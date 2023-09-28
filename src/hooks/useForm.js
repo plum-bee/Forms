@@ -29,12 +29,15 @@ function useForm (initialData, validate) {
     }
   }
 
-  const handleSubmit = callback => {
-    console.log('handleSubmit')
-  }
-
   const handleClear = () => {
     setFormData(initialData)
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    const formDataString = JSON.stringify(formData, null, 2)
+    const newWindow = window.open('', '_blank')
+    newWindow.document.write(`<pre>${formDataString}</pre>`)
   }
 
   return {
@@ -42,8 +45,8 @@ function useForm (initialData, validate) {
     formErrors,
     handleChange,
     handleBlur,
-    handleSubmit,
-    handleClear
+    handleClear,
+    handleSubmit
   }
 }
 
