@@ -16,15 +16,21 @@ function Form ({ onSubmit }) {
 
   const availableCountries = ['SPAIN', 'ARGENTINA']
 
-  const { formData, formErrors, handleChange, handleBlur, handleClear } =
-    useForm(initialData, validators.validate)
+  const {
+    formData,
+    formErrors,
+    handleChange,
+    handleBlur,
+    handleClear,
+    isFormValid
+  } = useForm(initialData, validators.validate)
 
   const handleSubmit = event => {
     event.preventDefault()
     onSubmit(formData)
   }
   return (
-    <form>
+    <form className='form-container'>
       <InputField
         label='Name'
         id='name'
@@ -81,9 +87,18 @@ function Form ({ onSubmit }) {
         error={formErrors.dni}
       />
 
-      <Button buttonName='Submit' onClick={handleSubmit} />
+      <Button
+        buttonName='Submit'
+        onClick={handleSubmit}
+        isDisabled={!isFormValid}
+        className='submit-button'
+      />
 
-      <Button buttonName='Clear' onClick={handleClear} />
+      <Button
+        buttonName='Clear'
+        onClick={handleClear}
+        className='clear-button'
+      />
     </form>
   )
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent } from '@testing-library/react'
 import Form from '../../components/Form.jsx'
+import App from '../../App.jsx'
 
 const formFields = ['name', 'surname', 'username', 'country', 'dni']
 
@@ -19,7 +20,7 @@ export const formSteps = ({
 }) => {
   // Given steps
   Given(/^the user opens the form$/, () => {
-    render(<Form />)
+    render(<App />)
   })
 
   // When steps
@@ -96,9 +97,12 @@ export const formSteps = ({
   Then(/^the user should see a new window containing the form data$/, () => {
     const newWindow = screen.getByTestId('form-data')
     const formData = formFields.map(field => {
-      return `${field}: ${screen.getByTestId(field).value}`
+      const element = screen.getByTestId(field)
+      const fieldValue = element.textContent
+      return `${fieldValue}`
     })
-    expect(newWindow).toHaveTextContent(formData.join('\n'))
+    const expectedTextContent = `Your Submitted Data:${formData.join('')}`
+    expect(newWindow).toHaveTextContent(expectedTextContent)
   })
 }
 

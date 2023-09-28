@@ -1,9 +1,10 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function useForm (initialData, validate) {
   const [formData, setFormData] = useState(initialData)
   const [formErrors, setFormErrors] = useState({})
+  const [isFormValid, setIsFormValid] = useState(false)
 
   const handleChange = event => {
     const { name, value } = event.target
@@ -33,12 +34,18 @@ function useForm (initialData, validate) {
     setFormData(initialData)
   }
 
+  useEffect(() => {
+    const hasEmptyFields = Object.values(formData).some(value => value === '')
+    setIsFormValid(Object.keys(formErrors).length === 0 && !hasEmptyFields)
+  }, [formData, formErrors])
+
   return {
     formData,
     formErrors,
     handleChange,
     handleBlur,
-    handleClear
+    handleClear,
+    isFormValid
   }
 }
 

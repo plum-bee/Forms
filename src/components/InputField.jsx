@@ -16,7 +16,7 @@ function InputField ({
   }
 
   return (
-    <label htmlFor={id}>
+    <label htmlFor={id} className={`input-field ${getClassName(value, error)}`}>
       {label}:
       <input
         id={id}
@@ -26,9 +26,12 @@ function InputField ({
         onChange={handleChange}
         onBlur={handleBlur}
         data-testid={id}
-        className={getClassName(value, error)}
       />
-      {error && <div data-testid={`${id}-error`}>{error}</div>}
+      {error && (
+        <div className='error' data-testid={`${id}-error`}>
+          {error}
+        </div>
+      )}
     </label>
   )
 }

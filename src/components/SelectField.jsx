@@ -17,30 +17,28 @@ function SelectField ({
   }
 
   return (
-    <div>
-      <label htmlFor={id}>
-        {label}:
-        <select
-          id={id}
-          name={name}
-          value={value}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          className={getClassName(value, error)}
-          data-testid={id}
-        >
-          <option value='' data-testid={placeholder}>
-            {placeholder}
+    <label htmlFor={id} className='input-field'>
+      {label}:
+      <select
+        id={id}
+        name={name}
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        className={getClassName(value, error)}
+        data-testid={id}
+      >
+        <option value='' data-testid={placeholder}>
+          {placeholder}
+        </option>
+        {options.map(option => (
+          <option key={option} value={option} data-testid={option}>
+            {option}
           </option>
-          {options.map(option => (
-            <option key={option} value={option} data-testid={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </label>
+        ))}
+      </select>
       {error && <div data-testid={`${id}-error`}>{error}</div>}
-    </div>
+    </label>
   )
 }
 

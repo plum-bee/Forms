@@ -180,6 +180,7 @@ Feature: Form Submission
         When the user clicks the "clear" button
         Then the form data should show as empty
 
+    @single
     Scenario: Submit button opens a new window containing all the data submited
         And the user types the following data
             | field    | value     |
