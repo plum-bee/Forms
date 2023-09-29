@@ -31,7 +31,7 @@ function Form ({ onSubmit }) {
   }
   return (
     <form className='form-container'>
-      <h1>Minesweeper Form 💣</h1>
+      <h1>Minesweeper Form</h1>
 
       <InputField
         label='Name'

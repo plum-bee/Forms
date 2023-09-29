@@ -2,12 +2,13 @@ import React from 'react'
 
 function SubmittedForm ({ formData }) {
   return (
-    <div data-testid='form-data'>
+    <div className='submittedForm' data-testid='form-data'>
       <h1>Your Submitted Data:</h1>
       {formData &&
         Object.keys(formData).map(key => (
-          <div key={key} data-testid={key}>
-            <strong>{key}:</strong> {formData[key]}
+          <div key={key} className='dataRow' data-testid={key}>
+            <strong className='dataKey'>{key}:</strong>{' '}
+            <span className='dataValue'>{formData[key]}</span>
           </div>
         ))}
     </div>

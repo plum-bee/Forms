@@ -18,9 +18,9 @@
 }
 
 .form-container h1 {
-  color: #007bff;
+  color: #343a40;
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .input-field {
@@ -42,10 +42,10 @@ label {
   padding: 0.5rem;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
-  margin-top: 0.25rem;
   font-size: 1rem;
   outline: none;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-sizing: border-box;
 }
 
 .input-field input:focus,
@@ -103,4 +103,39 @@ button {
   background-color: #6c757d;
   color: white;
   cursor: not-allowed;
+}
+
+.submittedForm {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  width: 30%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submittedForm h1 {
+  color: #495057;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.dataRow {
+  background-color: #ffffff;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dataKey {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #212529;
+}
+
+.dataValue {
+  color: #495057;
 }
