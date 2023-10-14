@@ -29,6 +29,7 @@ function Form ({ onSubmit }) {
     event.preventDefault()
     onSubmit(formData)
   }
+
   return (
     <form className='form-container'>
       <h1>Minesweeper Form</h1>
@@ -72,7 +73,7 @@ function Form ({ onSubmit }) {
         name='country'
         placeholder='Select your country'
         value={formData.country}
-        options={availableCountries}
+        options={[...availableCountries]}
         handleChange={handleChange}
         handleBlur={handleBlur}
         error={formErrors.country}

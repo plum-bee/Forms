@@ -6,11 +6,18 @@ function useForm (initialData, validate) {
   const [formErrors, setFormErrors] = useState({})
   const [isFormValid, setIsFormValid] = useState(false)
 
-  const handleChange = event => {
-    const { name, value } = event.target
+  const updateFormData = (name, value) => {
     setFormData(prevData => ({ ...prevData, [name]: value }))
+  }
+
+  const validateFormData = (name, value) => {
     const errors = validate({ ...formData, [name]: value })
     setFormErrors(errors)
+  }
+
+  const handleChange = event => {
+    const { name, value } = event.target
+    updateFormData(name, value)
   }
 
   const handleBlur = event => {

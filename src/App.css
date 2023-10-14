@@ -40,6 +40,7 @@ label {
 .input-field select {
   width: 100%;
   padding: 0.5rem;
+  margin-top: 0.25rem;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
   font-size: 1rem;
